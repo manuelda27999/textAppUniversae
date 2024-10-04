@@ -4,6 +4,8 @@
  */
 package app;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author ManuelDa
@@ -15,6 +17,30 @@ public class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
+        
+        //Establecer imagen y dimensiones del desplegable
+        Dimension desplegableDimension = new Dimension(346, 40);
+        utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
+    
+        //Establecer imagen y dimensiones de los botones
+        Dimension buttonDimension = new Dimension(20, 20);
+        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);        
+        utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
+
+        
+        panelPregunta pregunta1 = new panelPregunta();
+        panelPregunta pregunta2 = new panelPregunta();
+        panelPregunta pregunta3 = new panelPregunta();
+        panelPregunta pregunta4 = new panelPregunta();
+        panelPregunta pregunta5 = new panelPregunta();
+        
+        Dimension panelPreguntaDimension = new Dimension(350, 230);
+        
+        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5};
+        for (int i = 0; i < 5;i++) {
+            arrayPreguntas[i].setPreferredSize(panelPreguntaDimension);
+            jPanelListadoPreguntas.add(arrayPreguntas[i]);
+        }
     }
 
     /**
@@ -26,17 +52,118 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelPrincipal = new javax.swing.JPanel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabelTipoSimulador = new javax.swing.JLabel();
+        jPanelDesplegable = new javax.swing.JPanel();
+        jLabelTexto = new javax.swing.JLabel();
+        jLabelDesplegable = new javax.swing.JLabel();
+        jPanelAñadirUnaPregunta = new javax.swing.JPanel();
+        jLabelAñadirUnaPregunta = new javax.swing.JLabel();
+        jLabelButtonAñadir = new javax.swing.JLabel();
+        jLabelButtonInfo = new javax.swing.JLabel();
+        jPanelListadoPreguntas = new javax.swing.JPanel();
+        jPanelButton = new javax.swing.JPanel();
+        jLabelButtonText = new javax.swing.JLabel();
+        jLabelButton = new javax.swing.JLabel();
+        jLabelfondo = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanelPrincipal.setMaximumSize(new java.awt.Dimension(430, 932));
+        jPanelPrincipal.setMinimumSize(new java.awt.Dimension(430, 932));
+        jPanelPrincipal.setName(""); // NOI18N
+        jPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelTitulo.setFont(new java.awt.Font("Raleway", 0, 24)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("Crea tu simulador teórico");
+        jLabelTitulo.setMaximumSize(new java.awt.Dimension(370, 50));
+        jLabelTitulo.setMinimumSize(new java.awt.Dimension(370, 50));
+        jLabelTitulo.setPreferredSize(new java.awt.Dimension(370, 50));
+        jPanelPrincipal.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 330, 40));
+
+        jLabelTipoSimulador.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jLabelTipoSimulador.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTipoSimulador.setText("Tipo de Simulador");
+        jLabelTipoSimulador.setMaximumSize(new java.awt.Dimension(430, 30));
+        jLabelTipoSimulador.setMinimumSize(new java.awt.Dimension(430, 30));
+        jLabelTipoSimulador.setPreferredSize(new java.awt.Dimension(430, 30));
+        jPanelPrincipal.add(jLabelTipoSimulador, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 140, -1));
+
+        jPanelDesplegable.setOpaque(false);
+        jPanelDesplegable.setPreferredSize(new java.awt.Dimension(380, 40));
+        jPanelDesplegable.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelTexto.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jLabelTexto.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTexto.setText("Como ordeñar una vaca");
+        jPanelDesplegable.add(jLabelTexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 170, 50));
+
+        jLabelDesplegable.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jLabelDesplegable.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDesplegable.setMaximumSize(new java.awt.Dimension(346, 40));
+        jLabelDesplegable.setMinimumSize(new java.awt.Dimension(346, 40));
+        jLabelDesplegable.setPreferredSize(new java.awt.Dimension(346, 40));
+        jPanelDesplegable.add(jLabelDesplegable, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 350, 50));
+
+        jPanelPrincipal.add(jPanelDesplegable, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 360, 50));
+
+        jPanelAñadirUnaPregunta.setOpaque(false);
+        jPanelAñadirUnaPregunta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelAñadirUnaPregunta.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jLabelAñadirUnaPregunta.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelAñadirUnaPregunta.setText("Añadir una pregunta");
+        jPanelAñadirUnaPregunta.add(jLabelAñadirUnaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
+
+        jLabelButtonAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Mas_Off.png"))); // NOI18N
+        jLabelButtonAñadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelButtonAñadir.setMaximumSize(new java.awt.Dimension(20, 20));
+        jLabelButtonAñadir.setMinimumSize(new java.awt.Dimension(20, 20));
+        jLabelButtonAñadir.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelAñadirUnaPregunta.add(jLabelButtonAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 20, 20));
+
+        jLabelButtonInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Info_Off.png"))); // NOI18N
+        jLabelButtonInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelAñadirUnaPregunta.add(jLabelButtonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 20, 20));
+
+        jPanelPrincipal.add(jPanelAñadirUnaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
+
+        jPanelListadoPreguntas.setAutoscrolls(true);
+        jPanelListadoPreguntas.setLayout(new java.awt.GridLayout(5, 0, 0, 5));
+        jPanelPrincipal.add(jPanelListadoPreguntas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 350, 630));
+
+        jPanelButton.setOpaque(false);
+        jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelButtonText.setFont(new java.awt.Font("Raleway SemiBold", 0, 18)); // NOI18N
+        jLabelButtonText.setForeground(new java.awt.Color(31, 45, 57));
+        jLabelButtonText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelButtonText.setText("Crear");
+        jPanelButton.add(jLabelButtonText, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 16, 230, 60));
+
+        jLabelButton.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelButton.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Boton_On.png"))); // NOI18N
+        jPanelButton.add(jLabelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 240, 70));
+
+        jPanelPrincipal.add(jPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 830, 430, 110));
+
+        jLabelfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Fondo.png"))); // NOI18N
+        jPanelPrincipal.add(jLabelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 940));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
         );
 
         pack();
@@ -78,5 +205,20 @@ public class main extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelAñadirUnaPregunta;
+    private javax.swing.JLabel jLabelButton;
+    private javax.swing.JLabel jLabelButtonAñadir;
+    private javax.swing.JLabel jLabelButtonInfo;
+    private javax.swing.JLabel jLabelButtonText;
+    private javax.swing.JLabel jLabelDesplegable;
+    private javax.swing.JLabel jLabelTexto;
+    private javax.swing.JLabel jLabelTipoSimulador;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelfondo;
+    private javax.swing.JPanel jPanelAñadirUnaPregunta;
+    private javax.swing.JPanel jPanelButton;
+    private javax.swing.JPanel jPanelDesplegable;
+    private javax.swing.JPanel jPanelListadoPreguntas;
+    private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
