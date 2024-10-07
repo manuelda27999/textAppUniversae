@@ -5,36 +5,58 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class main {
 
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-
-        String ruta = "src/api/datos.csv";
-        
-        ArrayList<Preguntas> al = listaPreguntas(sc);
-        
-     
-        
-
-        crearArchivoCsv(sc, ruta, al);
-        
-        leerElArchivo(ruta, al);
+//    public static void main(String[] args) {
+//
+//        Scanner sc = new Scanner(System.in);
+//
+//        String ruta = "src/api/datos.csv";
+//        
+//        ArrayList<Preguntas> al = listaPreguntas(sc);
+//        
+//        
+//     
+//        
+//
+//        crearArchivoCsv( ruta, al);
+//        
+//        leerElArchivo(ruta, al);
+//        
+//        eliminarPreguntaCsv(ruta, 0, al, ruta);
+//       
+// 
+//
+//    }
+//    
        
- 
-
+    public static void eliminarPreguntaCsv(String archivoCSV, int indicePregunta, ArrayList<Preguntas> arrayL) {
+        
+        if (indicePregunta >= 0 && indicePregunta < arrayL.size()) {           
+            
+            //Eliminar la pregunta del ArrayList
+            arrayL.remove(indicePregunta);
+            
+            File archivo = new File(archivoCSV);
+            
+            //Si el archivo ya existe lo borra.
+            if(archivo.exists()) {
+                
+                archivo.delete();
+            }
+            
+            //Crea un archivo csv con las preguntas resantes.
+            crearArchivoCsv(archivoCSV, arrayL);
+            
+            System.out.println("Preguta eliminada y archivo actualizado.");
+        }else {
+            System.out.println("Indice fuera de rango");
+        }
+       
+        
     }
     
-    public static void eliminarPregunta(ArrayList<Preguntas> listaPreguntas, int indice) {
-        //verifica que el indice esté dentro de los limites de la lista.
-        if(indice >= 0 && indice < listaPreguntas.size()) {
-            listaPreguntas.remove(indice);
-            System.out.println("Pregunta eliminada correctamente.");
-        }else {
-            System.out.println("Indice fuera de rago. No se pudo eliminar la pregunta.");
-        }
-    }
     
     public static ArrayList<Preguntas> leerElArchivo(String rutaArchivo, ArrayList<Preguntas> arrayL){
         
@@ -58,6 +80,7 @@ public class main {
                 
                 arrayL.add(p);
             }
+            
         } catch (Exception e) {
             System.err.println("Error");
         }
@@ -67,10 +90,9 @@ public class main {
         }
         return arrayL;
     }
-    
-
    
-    public static boolean crearArchivoCsv(Scanner sc, String rutaArchivo, ArrayList<Preguntas> arrayPreguntas) {
+    
+    public static boolean crearArchivoCsv( String rutaArchivo, ArrayList<Preguntas> arrayPreguntas) {
 
         // Crea un nuevo archivo CSV en la ruta especificada
         File f = new File(rutaArchivo);
@@ -81,6 +103,7 @@ public class main {
             // Itera sobre cada pregunta en la lista
             for (Preguntas preguntas : arrayPreguntas) {
 
+                
                 // Obtiene la representación en CSV de la pregunta y la escribe en el archivo
                 fw.write(preguntas.tuCSV() + "\n");
             }
@@ -88,10 +111,12 @@ public class main {
 
         } catch (Exception e) {
             System.out.println("Se ha producido un error");
+            
         }
         return false;
     }
 
+    
     //Este método crea una lista de preguntas a partir de una entrada del usuario por consola.
     public static ArrayList<Preguntas> listaPreguntas(Scanner sc) {
 
@@ -111,7 +136,7 @@ public class main {
         do {
 
             // Solicita al usuario que ingrese una pregunta
-            System.out.println("Pregunta: ");
+            System.out.println("Pregunta (o 'Fin' para terminar: ");
             pregunta = sc.nextLine();
 
             // Si la pregunta no es "Fin", sigue solicitando las respuestas y crea un objeto Pregunta
@@ -138,5 +163,7 @@ public class main {
         return array;
 
     }
+    
+ 
 
 }

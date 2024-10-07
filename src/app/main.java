@@ -4,7 +4,14 @@
  */
 package app;
 
+
+import api.Preguntas;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+
 
 /**
  *
@@ -12,35 +19,68 @@ import java.awt.Dimension;
  */
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    private JPanel panelPregunta;
+    private int contadorPaneles = 0;
+    private ArrayList<Preguntas> preguntasList;
+    private String rutaArchivoCsv = "src/api/datos.csv";
+
     public main() {
         initComponents();
-        
+
         //Establecer imagen y dimensiones del desplegable
         Dimension desplegableDimension = new Dimension(346, 40);
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
-    
+
         //Establecer imagen y dimensiones de los botones
         Dimension buttonDimension = new Dimension(20, 20);
-        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);        
+        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
 
+//        panelPregunta pregunta1 = new panelPregunta();
+//        panelPregunta pregunta2 = new panelPregunta();
+//        panelPregunta pregunta3 = new panelPregunta();
+//        panelPregunta pregunta4 = new panelPregunta();
+//        panelPregunta pregunta5 = new panelPregunta();
+//        
+//        Dimension panelPreguntaDimension = new Dimension(350, 230);
+//        
+//        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5};
+//        for (int i = 0; i < 5;i++) {
+//            arrayPreguntas[i].setPreferredSize(panelPreguntaDimension);
+//            jPanelListadoPreguntas.add(arrayPreguntas[i]);
+//        }
+        jLabelButtonAñadir.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                agregarNuevoPanelDesdePreguntas();
+
+            }
+           
+        });
+
+
+    }
+
+    public void agregarNuevoPanelDesdePreguntas() {
+       
         
-        panelPregunta pregunta1 = new panelPregunta();
-        panelPregunta pregunta2 = new panelPregunta();
-        panelPregunta pregunta3 = new panelPregunta();
-        panelPregunta pregunta4 = new panelPregunta();
-        panelPregunta pregunta5 = new panelPregunta();
-        
-        Dimension panelPreguntaDimension = new Dimension(350, 230);
-        
-        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5};
-        for (int i = 0; i < 5;i++) {
-            arrayPreguntas[i].setPreferredSize(panelPreguntaDimension);
-            jPanelListadoPreguntas.add(arrayPreguntas[i]);
+        for(Preguntas preguntas : preguntasList){
+        contadorPaneles++;
+        panelPregunta nuevoPanel = new panelPregunta(preguntas.tuCSV(), preguntas.toString());
+        showPanel(nuevoPanel);
         }
+    }
+    
+    
+    private void showPanel(JPanel panelName) {
+
+        panelName.setSize(350, 150);
+        panelName.setLocation(0, 0);
+
+        jPanelListadoPreguntas.add(panelName);
+        jPanelListadoPreguntas.revalidate();
+        jPanelListadoPreguntas.repaint();
     }
 
     /**
@@ -172,37 +212,37 @@ public class main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new main().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new main().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelAñadirUnaPregunta;

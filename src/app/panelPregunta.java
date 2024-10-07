@@ -13,9 +13,13 @@ public class panelPregunta extends javax.swing.JPanel {
     /**
      * Creates new form panelPregunta
      */
-    public panelPregunta() {
+    public panelPregunta(String tuCSV, String toString) {
         initComponents();
+        
+        
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,6 +33,8 @@ public class panelPregunta extends javax.swing.JPanel {
         jPanelfondo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jPanelfondo.setBackground(new java.awt.Color(111, 120, 129));
         jPanelfondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -38,16 +44,7 @@ public class panelPregunta extends javax.swing.JPanel {
         jLabel1.setText("Hola mundo");
         jPanelfondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelfondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelfondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        add(jPanelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 

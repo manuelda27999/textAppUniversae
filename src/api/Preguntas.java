@@ -2,6 +2,7 @@ package api;
 
 public class Preguntas {
 
+    private int id;
     private String pregunta;// Almacena el texto de la pregunta
     private String respuestaCorrecta;// Almacena la respuesta correcta
     private String respuestaIncorrecta1;// Almacena la primera respuesta incorrecta
@@ -11,6 +12,7 @@ public class Preguntas {
     public Preguntas(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
         
         //Inicializa los atributos de la pregunta
+        
         this.pregunta = pregunta;
         this.respuestaCorrecta = respuestaCorrecta;
         this.respuestaIncorrecta1 = respuestaIncorrecta1;
@@ -30,9 +32,19 @@ public class Preguntas {
     public String tuCSV() {
         return this.pregunta + ";" + this.respuestaCorrecta + ";" + this.respuestaIncorrecta1 + ";" + this.respuestaIncorrecta2 + ";" + this.respuestaIncorrecta3;
     }
+    
+    
+   
+    // Métodos getter y setter para acceder y modificar los atributos de la pregunta
+     public int getId() {    
+        return id;
+    }
 
     
-    // Métodos getter y setter para acceder y modificar los atributos de la pregunta
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getPregunta() {
         return pregunta;
     }
