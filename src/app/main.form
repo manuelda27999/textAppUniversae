@@ -237,6 +237,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -249,7 +250,7 @@
             <Container class="javax.swing.JPanel" name="jPanelListadoPreguntas">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="ff" red="33" type="rgb"/>
+                  <Color blue="25" green="15" red="5" type="rgb"/>
                 </Property>
               </Properties>
 

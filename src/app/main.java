@@ -5,6 +5,7 @@
 package app;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import javax.swing.JScrollPane;
 
 /**
@@ -20,7 +21,7 @@ public class main extends javax.swing.JFrame {
         initComponents();
 
         //Establecer imagen y dimensiones del desplegable
-        Dimension desplegableDimension = new Dimension(346, 40);
+        Dimension desplegableDimension = new Dimension(340, 40);
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
 
         //Establecer imagen y dimensiones de los botones
@@ -37,7 +38,7 @@ public class main extends javax.swing.JFrame {
         panelPregunta pregunta7 = new panelPregunta();
 
         //Establecer dimensiones de los paneles de preguntas
-        Dimension panelPreguntaDimension = new Dimension(356, 200);
+        Dimension panelPreguntaDimension = new Dimension(340, 200);
 
         panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7};
 
@@ -144,8 +145,9 @@ public class main extends javax.swing.JFrame {
 
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
+        jScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jPanelListadoPreguntas.setBackground(new java.awt.Color(51, 255, 204));
+        jPanelListadoPreguntas.setBackground(new java.awt.Color(5, 21, 37));
         jPanelListadoPreguntas.setLayout(new javax.swing.BoxLayout(jPanelListadoPreguntas, javax.swing.BoxLayout.PAGE_AXIS));
         jScrollPane.setViewportView(jPanelListadoPreguntas);
 

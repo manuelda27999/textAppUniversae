@@ -4,6 +4,9 @@
  */
 package app;
 
+import app.utility.RoundedBorder;
+import java.awt.Dimension;
+
 /**
  *
  * @author ManuelDa
@@ -15,10 +18,16 @@ public class panelPregunta extends javax.swing.JPanel {
      */
     public panelPregunta() {
         initComponents();
+        
+        //Establezco las dimensiones e imagen del botón de eliminar
+        Dimension botonEliminarDimension = new Dimension(14, 14);
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
+        
+        RoundedBorder roundedBorder = new RoundedBorder(20);
+        jPanelFondo.setBorder(roundedBorder);
     }
 
-    public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, 
-            String respuestaIncorrecta2, String respuestaIncorrecta3) {
+    public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
         initComponents();
         
         
@@ -33,9 +42,11 @@ public class panelPregunta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelfondo = new javax.swing.JPanel();
-        jLabelPregunta = new javax.swing.JLabel();
         jTextFieldPregunta = new javax.swing.JTextField();
+        jPanelFondo = new javax.swing.JPanel();
+        jLabelBotonEliminar = new javax.swing.JLabel();
+        jLabelPregunta = new javax.swing.JLabel();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabelPregunta1 = new javax.swing.JLabel();
         jTextFieldPregunta1 = new javax.swing.JTextField();
         jLabelPregunta2 = new javax.swing.JLabel();
@@ -43,17 +54,8 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextFieldPregunta3 = new javax.swing.JTextField();
         jTextFieldPregunta4 = new javax.swing.JTextField();
 
-        jPanelfondo.setBackground(new java.awt.Color(26, 41, 54));
-        jPanelfondo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(5, 20, 36), 3, true));
-        jPanelfondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelPregunta.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPregunta.setText("Pregunta");
-        jPanelfondo.add(jLabelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 160, 20));
-
         jTextFieldPregunta.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta.setColumns(2);
-        jTextFieldPregunta.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextFieldPregunta.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldPregunta.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldPregunta.setText("¿Cuál de estos animales presenta un mayor riesgo de estinción?");
@@ -64,82 +66,100 @@ public class panelPregunta extends javax.swing.JPanel {
                 jTextFieldPreguntaActionPerformed(evt);
             }
         });
-        jPanelfondo.add(jTextFieldPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 300, 40));
+
+        jPanelFondo.setBackground(new java.awt.Color(26, 41, 54));
+        jPanelFondo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(5, 20, 36), 4, true));
+        jPanelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelBotonEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBotonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Menos_Off.png"))); // NOI18N
+        jLabelBotonEliminar.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 1, 1, 3));
+        jPanelFondo.add(jLabelBotonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 20, 20));
+
+        jLabelPregunta.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPregunta.setText("Pregunta");
+        jPanelFondo.add(jLabelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 160, 20));
+
+        jTextArea1.setBackground(new java.awt.Color(73, 83, 92));
+        jTextArea1.setColumns(3);
+        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(2);
+        jTextArea1.setText("¿Cuales de estos animales presenta un mayor riesgo de extinción?");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 12, 0, 12));
+        jPanelFondo.add(jTextArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 300, 40));
 
         jLabelPregunta1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPregunta1.setText("Respuesta correcta");
-        jPanelfondo.add(jLabelPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 160, 20));
+        jPanelFondo.add(jLabelPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 160, 20));
 
         jTextFieldPregunta1.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta1.setColumns(2);
-        jTextFieldPregunta1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextFieldPregunta1.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldPregunta1.setText("Ajolote");
-        jTextFieldPregunta1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldPregunta1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
         jTextFieldPregunta1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldPregunta1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPregunta1ActionPerformed(evt);
             }
         });
-        jPanelfondo.add(jTextFieldPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 300, 20));
+        jPanelFondo.add(jTextFieldPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 300, 20));
 
         jLabelPregunta2.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPregunta2.setText("Respuestas incorrectas");
-        jPanelfondo.add(jLabelPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 160, 20));
+        jPanelFondo.add(jLabelPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 160, 20));
 
         jTextFieldPregunta2.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta2.setColumns(2);
-        jTextFieldPregunta2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextFieldPregunta2.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldPregunta2.setText("Koala");
-        jTextFieldPregunta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldPregunta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
         jTextFieldPregunta2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldPregunta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPregunta2ActionPerformed(evt);
             }
         });
-        jPanelfondo.add(jTextFieldPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 300, 20));
+        jPanelFondo.add(jTextFieldPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 300, 20));
 
         jTextFieldPregunta3.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta3.setColumns(2);
-        jTextFieldPregunta3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextFieldPregunta3.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldPregunta3.setText("Panda");
-        jTextFieldPregunta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldPregunta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
         jTextFieldPregunta3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldPregunta3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPregunta3ActionPerformed(evt);
             }
         });
-        jPanelfondo.add(jTextFieldPregunta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 300, 20));
+        jPanelFondo.add(jTextFieldPregunta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 300, 20));
 
         jTextFieldPregunta4.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta4.setColumns(2);
-        jTextFieldPregunta4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jTextFieldPregunta4.setForeground(new java.awt.Color(255, 255, 255));
         jTextFieldPregunta4.setText("Capibara");
         jTextFieldPregunta4.setAlignmentY(0.3F);
-        jTextFieldPregunta4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldPregunta4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
         jTextFieldPregunta4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldPregunta4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPregunta4ActionPerformed(evt);
             }
         });
-        jPanelfondo.add(jTextFieldPregunta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 300, 20));
+        jPanelFondo.add(jTextFieldPregunta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 300, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelfondo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelfondo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -165,10 +185,12 @@ public class panelPregunta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelBotonEliminar;
     private javax.swing.JLabel jLabelPregunta;
     private javax.swing.JLabel jLabelPregunta1;
     private javax.swing.JLabel jLabelPregunta2;
-    private javax.swing.JPanel jPanelfondo;
+    private javax.swing.JPanel jPanelFondo;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextFieldPregunta;
     private javax.swing.JTextField jTextFieldPregunta1;
     private javax.swing.JTextField jTextFieldPregunta2;
