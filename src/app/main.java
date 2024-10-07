@@ -5,6 +5,7 @@
 package app;
 
 import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -17,30 +18,39 @@ public class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
-        
+
         //Establecer imagen y dimensiones del desplegable
         Dimension desplegableDimension = new Dimension(346, 40);
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
-    
+
         //Establecer imagen y dimensiones de los botones
         Dimension buttonDimension = new Dimension(20, 20);
-        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);        
+        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
 
-        
         panelPregunta pregunta1 = new panelPregunta();
         panelPregunta pregunta2 = new panelPregunta();
         panelPregunta pregunta3 = new panelPregunta();
         panelPregunta pregunta4 = new panelPregunta();
         panelPregunta pregunta5 = new panelPregunta();
-        
-        Dimension panelPreguntaDimension = new Dimension(350, 230);
-        
-        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5};
-        for (int i = 0; i < 5;i++) {
-            arrayPreguntas[i].setPreferredSize(panelPreguntaDimension);
-            jPanelListadoPreguntas.add(arrayPreguntas[i]);
+        panelPregunta pregunta6 = new panelPregunta();
+        panelPregunta pregunta7 = new panelPregunta();
+
+        //Establecer dimensiones de los paneles de preguntas
+        Dimension panelPreguntaDimension = new Dimension(356, 200);
+
+        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7};
+
+        for (panelPregunta pregunta : arrayPreguntas) {
+            pregunta.setPreferredSize(panelPreguntaDimension);
+            pregunta.setMaximumSize(panelPreguntaDimension);
+            jPanelListadoPreguntas.add(pregunta);
+            System.out.println("hola");
         }
+
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
     }
 
     /**
@@ -62,6 +72,7 @@ public class main extends javax.swing.JFrame {
         jLabelAñadirUnaPregunta = new javax.swing.JLabel();
         jLabelButtonAñadir = new javax.swing.JLabel();
         jLabelButtonInfo = new javax.swing.JLabel();
+        jScrollPane = new javax.swing.JScrollPane();
         jPanelListadoPreguntas = new javax.swing.JPanel();
         jPanelButton = new javax.swing.JPanel();
         jLabelButtonText = new javax.swing.JLabel();
@@ -131,9 +142,14 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelAñadirUnaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
 
-        jPanelListadoPreguntas.setAutoscrolls(true);
-        jPanelListadoPreguntas.setLayout(new java.awt.GridLayout(5, 0, 0, 5));
-        jPanelPrincipal.add(jPanelListadoPreguntas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 350, 630));
+        jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
+        jScrollPane.setBorder(null);
+
+        jPanelListadoPreguntas.setBackground(new java.awt.Color(51, 255, 204));
+        jPanelListadoPreguntas.setLayout(new javax.swing.BoxLayout(jPanelListadoPreguntas, javax.swing.BoxLayout.PAGE_AXIS));
+        jScrollPane.setViewportView(jPanelListadoPreguntas);
+
+        jPanelPrincipal.add(jScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 350, 630));
 
         jPanelButton.setOpaque(false);
         jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -220,5 +236,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDesplegable;
     private javax.swing.JPanel jPanelListadoPreguntas;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JScrollPane jScrollPane;
     // End of variables declaration//GEN-END:variables
 }
