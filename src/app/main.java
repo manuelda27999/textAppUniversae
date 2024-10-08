@@ -1,10 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package app;
 
+import api.Preguntas;
+import api.utilityCSV;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -12,35 +17,121 @@ import java.awt.Dimension;
  */
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    private int contadorPaneles = 0;// Variable para contar el número de paneles que se han agregado.
+    public String rutaCSV = "src/api/datos.csv";// Ruta al archivo CSV que contiene los datos.
+    
+
     public main() {
+
         initComponents();
         
-        //Establecer imagen y dimensiones del desplegable
+        ArrayList<Preguntas> listaPreguntas = new ArrayList<>(); // Crea una lista de objetos de tipo 'Preguntas'.
+
+        // Lee el archivo CSV y almacena las preguntas en la lista.
+        utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
+        System.out.println(listaPreguntas);
+
+        // Recorre la lista de preguntas y actualiza los paneles en la interfaz según los datos del CSV.
+        for (int i = 0; i < listaPreguntas.size(); i++) {
+            actualizarPanelSegunCSV(listaPreguntas);
+        }
+
+        // Establecer imagen y dimensiones del desplegable
         Dimension desplegableDimension = new Dimension(346, 40);
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
-    
-        //Establecer imagen y dimensiones de los botones
+
+        // Establecer imagen y dimensiones de los botones
         Dimension buttonDimension = new Dimension(20, 20);
-        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);        
+        utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
 
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+
+        // Añade un listener al botón de añadir para capturar eventos de clic.
+        jLabelButtonAñadir.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                AgregarPanelPreguntas(listaPreguntas);// Agrega un nuevo panel de preguntas a la interfaz.
+                System.out.println(contadorPaneles);
+
+            }
+
+        });
         
-        panelPregunta pregunta1 = new panelPregunta();
-        panelPregunta pregunta2 = new panelPregunta();
-        panelPregunta pregunta3 = new panelPregunta();
-        panelPregunta pregunta4 = new panelPregunta();
-        panelPregunta pregunta5 = new panelPregunta();
+        // Añade un listener al botón jLabelButton para capturar eventos de clic.
+        jLabelButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de pregunta.
+                utilityCSV.obtenerPreguntasDeCampos(listaPreguntas, nuevoPanel);
+                
+                
+                // Añade la nueva pregunta al archivo CSV.
+                utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
+                System.out.println(listaPreguntas);
+                System.out.println(contadorPaneles);
+
+            }
+
+        });
+       
+    }
+
+    // Método para agregar un panel con preguntas a la interfaz.
+    public void AgregarPanelPreguntas(ArrayList<Preguntas> lista) {
+
+        contadorPaneles++;// Incrementa el contador de paneles.
+        panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
+        nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
+        showPanel(nuevoPanel);// Muestra el nuevo panel en la interfaz.
+        nuevoPanel.iniciar(contadorPaneles, lista);// Inicializa el panel con el número de panel y la lista de preguntas.
         
-        Dimension panelPreguntaDimension = new Dimension(350, 230);
         
-        panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5};
-        for (int i = 0; i < 5;i++) {
-            arrayPreguntas[i].setPreferredSize(panelPreguntaDimension);
-            jPanelListadoPreguntas.add(arrayPreguntas[i]);
-        }
+        // Captura los datos del panel
+        String pregunta = nuevoPanel.getPreguntaText(); // Obtiene la pregunta
+        String respuestaCorrecta = nuevoPanel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
+        String respuestaIncorrecta1 = nuevoPanel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta incorrecta
+        String respuestaIncorrecta2 = nuevoPanel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta incorrecta
+        String respuestaIncorrecta3 = nuevoPanel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta incorrecta
+
+        // Crea un nuevo objeto Preguntas
+        Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
+
+        // Agrega la nueva pregunta a la lista
+        lista.add(nuevaPregunta);
+        
+        // Muestra la lista de preguntas en la consola para verificar
+        System.out.println("Preguntas actuales en la lista: " + lista);
+    
+
+    }
+
+    // Método para agregar un panel con preguntas que se encuentran el csv.
+    public void actualizarPanelSegunCSV(ArrayList<Preguntas> lista2) {
+
+        panelPregunta nuevoPanel = new panelPregunta();
+        nuevoPanel.padre = this;
+        showPanel(nuevoPanel);
+        nuevoPanel.iniciar(contadorPaneles++, lista2);
+        System.out.println(contadorPaneles);
+
+    }
+
+    private void showPanel(JPanel panelName) {
+
+        panelName.setSize(344, 200);
+        panelName.setLocation(0, 0);
+        panelName.setVisible(true);
+
+        jPanelListadoPreguntas.add(panelName);
+        jPanelListadoPreguntas.revalidate();
+        jPanelListadoPreguntas.repaint();
     }
 
     /**
@@ -49,6 +140,7 @@ public class main extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -62,6 +154,7 @@ public class main extends javax.swing.JFrame {
         jLabelAñadirUnaPregunta = new javax.swing.JLabel();
         jLabelButtonAñadir = new javax.swing.JLabel();
         jLabelButtonInfo = new javax.swing.JLabel();
+        jScrollPane = new javax.swing.JScrollPane();
         jPanelListadoPreguntas = new javax.swing.JPanel();
         jPanelButton = new javax.swing.JPanel();
         jLabelButtonText = new javax.swing.JLabel();
@@ -131,9 +224,14 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelAñadirUnaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
 
-        jPanelListadoPreguntas.setAutoscrolls(true);
-        jPanelListadoPreguntas.setLayout(new java.awt.GridLayout(5, 0, 0, 5));
-        jPanelPrincipal.add(jPanelListadoPreguntas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 350, 630));
+        jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
+        jScrollPane.setBorder(null);
+
+        jPanelListadoPreguntas.setBackground(new java.awt.Color(51, 255, 204));
+        jPanelListadoPreguntas.setLayout(new javax.swing.BoxLayout(jPanelListadoPreguntas, javax.swing.BoxLayout.PAGE_AXIS));
+        jScrollPane.setViewportView(jPanelListadoPreguntas);
+
+        jPanelPrincipal.add(jScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 350, 630));
 
         jPanelButton.setOpaque(false);
         jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,37 +270,41 @@ public class main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new main().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        // </editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new main().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelAñadirUnaPregunta;
@@ -220,5 +322,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDesplegable;
     private javax.swing.JPanel jPanelListadoPreguntas;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JScrollPane jScrollPane;
     // End of variables declaration//GEN-END:variables
 }
