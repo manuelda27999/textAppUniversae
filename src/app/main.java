@@ -35,7 +35,7 @@ public class main extends javax.swing.JFrame {
         panelPregunta pregunta7 = new panelPregunta();
 
         //Establecer dimensiones de los paneles de preguntas
-        Dimension panelPreguntaDimension = new Dimension(350, 210);
+        Dimension panelPreguntaDimension = new Dimension(350, 220);
 
         panelPregunta[] arrayPreguntas = {pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6, pregunta7};
 
