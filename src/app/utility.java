@@ -55,12 +55,12 @@ public class utility {
         
         @Override
         public Insets getBorderInsets(Component c) {
-            return new Insets(15, 15, 15, 15);
+            return new Insets(0, 0, 0, 0);
         }
         
         @Override
         public Insets getBorderInsets(Component c, Insets insets) {
-            insets.left = insets.right = insets.top = insets.bottom = 10;
+            insets.left = insets.right = insets.top = insets.bottom = 0;
             return insets;
         }
     }

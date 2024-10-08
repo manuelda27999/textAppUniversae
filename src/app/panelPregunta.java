@@ -13,24 +13,19 @@ import java.awt.Dimension;
  */
 public class panelPregunta extends javax.swing.JPanel {
 
-    /**
-     * Creates new form panelPregunta
-     */
+    Dimension botonEliminarDimension = new Dimension(14, 14);
+
     public panelPregunta() {
         initComponents();
-        
+
         //Establezco las dimensiones e imagen del botón de eliminar
-        Dimension botonEliminarDimension = new Dimension(14, 14);
         utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
-        
-        RoundedBorder roundedBorder = new RoundedBorder(20);
-        jPanelFondo.setBorder(roundedBorder);
+
     }
 
     public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
         initComponents();
-        
-        
+
     }
 
     /**
@@ -43,16 +38,26 @@ public class panelPregunta extends javax.swing.JPanel {
     private void initComponents() {
 
         jTextFieldPregunta = new javax.swing.JTextField();
-        jPanelFondo = new javax.swing.JPanel();
-        jLabelBotonEliminar = new javax.swing.JLabel();
-        jLabelPregunta = new javax.swing.JLabel();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabelPregunta1 = new javax.swing.JLabel();
-        jTextFieldPregunta1 = new javax.swing.JTextField();
+        jTextFieldRespuesta2 = new javax.swing.JTextField();
+        jTextFieldRespuesta3 = new javax.swing.JTextField();
+        jTextFieldRespuesta4 = new javax.swing.JTextField();
         jLabelPregunta2 = new javax.swing.JLabel();
-        jTextFieldPregunta2 = new javax.swing.JTextField();
-        jTextFieldPregunta3 = new javax.swing.JTextField();
-        jTextFieldPregunta4 = new javax.swing.JTextField();
+        jPanelFondo = new javax.swing.JPanel();
+        roundedPanel1 = new app.RoundedPanel();
+        jLabelPregunta = new javax.swing.JLabel();
+        roundedPanelPregunta = new app.RoundedPanel();
+        jTextAreaPregunta = new javax.swing.JTextArea();
+        jLabelRespuestaCorrecta = new javax.swing.JLabel();
+        roundedPanelRespuestaCorrecta = new app.RoundedPanel();
+        jTextFieldRespuestaCorrecta = new javax.swing.JTextField();
+        jLabelRespuestasIncorrectas = new javax.swing.JLabel();
+        roundedPanelRespuestaIncorrecta1 = new app.RoundedPanel();
+        jTextFieldRespuestaIncorrecta1 = new javax.swing.JTextField();
+        roundedPanelRespuestaIncorrecta2 = new app.RoundedPanel();
+        jTextFieldRespuestaIncorrecta2 = new javax.swing.JTextField();
+        roundedPanelRespuestaIncorrecta3 = new app.RoundedPanel();
+        jTextFieldRespuestaIncorrecta3 = new javax.swing.JTextField();
+        jLabelBotonEliminar = new javax.swing.JLabel();
 
         jTextFieldPregunta.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldPregunta.setColumns(2);
@@ -67,99 +72,183 @@ public class panelPregunta extends javax.swing.JPanel {
             }
         });
 
-        jPanelFondo.setBackground(new java.awt.Color(26, 41, 54));
-        jPanelFondo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(5, 20, 36), 4, true));
+        jTextFieldRespuesta2.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuesta2.setColumns(2);
+        jTextFieldRespuesta2.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuesta2.setText("Koala");
+        jTextFieldRespuesta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        jTextFieldRespuesta2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuesta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuesta2ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldRespuesta3.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuesta3.setColumns(2);
+        jTextFieldRespuesta3.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuesta3.setText("Panda");
+        jTextFieldRespuesta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        jTextFieldRespuesta3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuesta3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuesta3ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldRespuesta4.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuesta4.setColumns(2);
+        jTextFieldRespuesta4.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuesta4.setText("Capibara");
+        jTextFieldRespuesta4.setAlignmentY(0.3F);
+        jTextFieldRespuesta4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
+        jTextFieldRespuesta4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuesta4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuesta4ActionPerformed(evt);
+            }
+        });
+
+        jLabelPregunta2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPregunta2.setText("Respuestas incorrectas");
+
+        jPanelFondo.setBackground(new java.awt.Color(4, 19, 37));
         jPanelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        roundedPanel1.setBackground(new java.awt.Color(26, 40, 55));
+        roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelPregunta.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPregunta.setText("Pregunta");
+        roundedPanel1.add(jLabelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 20));
+
+        roundedPanelPregunta.setBackground(new java.awt.Color(72, 82, 93));
+        roundedPanelPregunta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextAreaPregunta.setEditable(false);
+        jTextAreaPregunta.setBackground(new java.awt.Color(73, 83, 92));
+        jTextAreaPregunta.setColumns(3);
+        jTextAreaPregunta.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaPregunta.setLineWrap(true);
+        jTextAreaPregunta.setRows(2);
+        jTextAreaPregunta.setText("¿Cuales de estos animales presenta un mayor riesgo de extinción?");
+        jTextAreaPregunta.setWrapStyleWord(true);
+        jTextAreaPregunta.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 6, 3, 6));
+        jTextAreaPregunta.setOpaque(false);
+        jTextAreaPregunta.setPreferredSize(new java.awt.Dimension(125, 125));
+        roundedPanelPregunta.add(jTextAreaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 40));
+
+        roundedPanel1.add(roundedPanelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 310, 40));
+
+        jLabelRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelRespuestaCorrecta.setText("Respuesta correcta");
+        roundedPanel1.add(jLabelRespuestaCorrecta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 160, 20));
+
+        roundedPanelRespuestaCorrecta.setBackground(new java.awt.Color(72, 82, 93));
+        roundedPanelRespuestaCorrecta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextFieldRespuestaCorrecta.setEditable(false);
+        jTextFieldRespuestaCorrecta.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuestaCorrecta.setColumns(2);
+        jTextFieldRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuestaCorrecta.setText("Ajolote");
+        jTextFieldRespuestaCorrecta.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldRespuestaCorrecta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuestaCorrecta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuestaCorrectaActionPerformed(evt);
+            }
+        });
+        roundedPanelRespuestaCorrecta.add(jTextFieldRespuestaCorrecta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 20));
+
+        roundedPanel1.add(roundedPanelRespuestaCorrecta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 310, 20));
+
+        jLabelRespuestasIncorrectas.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelRespuestasIncorrectas.setText("Respuesta incorrecta");
+        roundedPanel1.add(jLabelRespuestasIncorrectas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 20));
+
+        roundedPanelRespuestaIncorrecta1.setBackground(new java.awt.Color(72, 82, 93));
+        roundedPanelRespuestaIncorrecta1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextFieldRespuestaIncorrecta1.setEditable(false);
+        jTextFieldRespuestaIncorrecta1.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuestaIncorrecta1.setColumns(2);
+        jTextFieldRespuestaIncorrecta1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuestaIncorrecta1.setText("Capibara");
+        jTextFieldRespuestaIncorrecta1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldRespuestaIncorrecta1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuestaIncorrecta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuestaIncorrecta1ActionPerformed(evt);
+            }
+        });
+        roundedPanelRespuestaIncorrecta1.add(jTextFieldRespuestaIncorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 20));
+
+        roundedPanel1.add(roundedPanelRespuestaIncorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 310, 20));
+
+        roundedPanelRespuestaIncorrecta2.setBackground(new java.awt.Color(72, 82, 93));
+        roundedPanelRespuestaIncorrecta2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextFieldRespuestaIncorrecta2.setEditable(false);
+        jTextFieldRespuestaIncorrecta2.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuestaIncorrecta2.setColumns(2);
+        jTextFieldRespuestaIncorrecta2.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuestaIncorrecta2.setText("Panda");
+        jTextFieldRespuestaIncorrecta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldRespuestaIncorrecta2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuestaIncorrecta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuestaIncorrecta2ActionPerformed(evt);
+            }
+        });
+        roundedPanelRespuestaIncorrecta2.add(jTextFieldRespuestaIncorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 20));
+
+        roundedPanel1.add(roundedPanelRespuestaIncorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 310, 20));
+
+        roundedPanelRespuestaIncorrecta3.setBackground(new java.awt.Color(72, 82, 93));
+        roundedPanelRespuestaIncorrecta3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextFieldRespuestaIncorrecta3.setEditable(false);
+        jTextFieldRespuestaIncorrecta3.setBackground(new java.awt.Color(72, 83, 93));
+        jTextFieldRespuestaIncorrecta3.setColumns(2);
+        jTextFieldRespuestaIncorrecta3.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldRespuestaIncorrecta3.setText("Koala");
+        jTextFieldRespuestaIncorrecta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
+        jTextFieldRespuestaIncorrecta3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldRespuestaIncorrecta3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRespuestaIncorrecta3ActionPerformed(evt);
+            }
+        });
+        roundedPanelRespuestaIncorrecta3.add(jTextFieldRespuestaIncorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 20));
+
+        roundedPanel1.add(roundedPanelRespuestaIncorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 310, -1));
 
         jLabelBotonEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBotonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Menos_Off.png"))); // NOI18N
         jLabelBotonEliminar.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 1, 1, 3));
-        jPanelFondo.add(jLabelBotonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 20, 20));
-
-        jLabelPregunta.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPregunta.setText("Pregunta");
-        jPanelFondo.add(jLabelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 160, 20));
-
-        jTextArea1.setBackground(new java.awt.Color(73, 83, 92));
-        jTextArea1.setColumns(3);
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(2);
-        jTextArea1.setText("¿Cuales de estos animales presenta un mayor riesgo de extinción?");
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 12, 0, 12));
-        jPanelFondo.add(jTextArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 300, 40));
-
-        jLabelPregunta1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPregunta1.setText("Respuesta correcta");
-        jPanelFondo.add(jLabelPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 160, 20));
-
-        jTextFieldPregunta1.setBackground(new java.awt.Color(72, 83, 93));
-        jTextFieldPregunta1.setColumns(2);
-        jTextFieldPregunta1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldPregunta1.setText("Ajolote");
-        jTextFieldPregunta1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
-        jTextFieldPregunta1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextFieldPregunta1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPregunta1ActionPerformed(evt);
+        jLabelBotonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelBotonEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabelBotonEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabelBotonEliminarMouseExited(evt);
             }
         });
-        jPanelFondo.add(jTextFieldPregunta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 300, 20));
+        roundedPanel1.add(jLabelBotonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 20, 20));
 
-        jLabelPregunta2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPregunta2.setText("Respuestas incorrectas");
-        jPanelFondo.add(jLabelPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 160, 20));
-
-        jTextFieldPregunta2.setBackground(new java.awt.Color(72, 83, 93));
-        jTextFieldPregunta2.setColumns(2);
-        jTextFieldPregunta2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldPregunta2.setText("Koala");
-        jTextFieldPregunta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
-        jTextFieldPregunta2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextFieldPregunta2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPregunta2ActionPerformed(evt);
-            }
-        });
-        jPanelFondo.add(jTextFieldPregunta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 300, 20));
-
-        jTextFieldPregunta3.setBackground(new java.awt.Color(72, 83, 93));
-        jTextFieldPregunta3.setColumns(2);
-        jTextFieldPregunta3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldPregunta3.setText("Panda");
-        jTextFieldPregunta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
-        jTextFieldPregunta3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextFieldPregunta3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPregunta3ActionPerformed(evt);
-            }
-        });
-        jPanelFondo.add(jTextFieldPregunta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 300, 20));
-
-        jTextFieldPregunta4.setBackground(new java.awt.Color(72, 83, 93));
-        jTextFieldPregunta4.setColumns(2);
-        jTextFieldPregunta4.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldPregunta4.setText("Capibara");
-        jTextFieldPregunta4.setAlignmentY(0.3F);
-        jTextFieldPregunta4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 0, 12));
-        jTextFieldPregunta4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextFieldPregunta4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPregunta4ActionPerformed(evt);
-            }
-        });
-        jPanelFondo.add(jTextFieldPregunta4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 300, 20));
+        jPanelFondo.add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 330, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -167,34 +256,64 @@ public class panelPregunta extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPreguntaActionPerformed
 
-    private void jTextFieldPregunta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPregunta1ActionPerformed
+    private void jTextFieldRespuestaCorrectaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuestaCorrectaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPregunta1ActionPerformed
+    }//GEN-LAST:event_jTextFieldRespuestaCorrectaActionPerformed
 
-    private void jTextFieldPregunta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPregunta2ActionPerformed
+    private void jTextFieldRespuesta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuesta2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPregunta2ActionPerformed
+    }//GEN-LAST:event_jTextFieldRespuesta2ActionPerformed
 
-    private void jTextFieldPregunta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPregunta3ActionPerformed
+    private void jTextFieldRespuesta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuesta3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPregunta3ActionPerformed
+    }//GEN-LAST:event_jTextFieldRespuesta3ActionPerformed
 
-    private void jTextFieldPregunta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPregunta4ActionPerformed
+    private void jTextFieldRespuesta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuesta4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPregunta4ActionPerformed
+    }//GEN-LAST:event_jTextFieldRespuesta4ActionPerformed
+
+    private void jTextFieldRespuestaIncorrecta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuestaIncorrecta1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRespuestaIncorrecta1ActionPerformed
+
+    private void jTextFieldRespuestaIncorrecta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuestaIncorrecta2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRespuestaIncorrecta2ActionPerformed
+
+    private void jTextFieldRespuestaIncorrecta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRespuestaIncorrecta3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRespuestaIncorrecta3ActionPerformed
+
+    private void jLabelBotonEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBotonEliminarMouseEntered
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_On.png", botonEliminarDimension);
+    }//GEN-LAST:event_jLabelBotonEliminarMouseEntered
+
+    private void jLabelBotonEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBotonEliminarMouseExited
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
+    }//GEN-LAST:event_jLabelBotonEliminarMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelBotonEliminar;
     private javax.swing.JLabel jLabelPregunta;
-    private javax.swing.JLabel jLabelPregunta1;
     private javax.swing.JLabel jLabelPregunta2;
+    private javax.swing.JLabel jLabelRespuestaCorrecta;
+    private javax.swing.JLabel jLabelRespuestasIncorrectas;
     private javax.swing.JPanel jPanelFondo;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaPregunta;
     private javax.swing.JTextField jTextFieldPregunta;
-    private javax.swing.JTextField jTextFieldPregunta1;
-    private javax.swing.JTextField jTextFieldPregunta2;
-    private javax.swing.JTextField jTextFieldPregunta3;
-    private javax.swing.JTextField jTextFieldPregunta4;
+    private javax.swing.JTextField jTextFieldRespuesta2;
+    private javax.swing.JTextField jTextFieldRespuesta3;
+    private javax.swing.JTextField jTextFieldRespuesta4;
+    private javax.swing.JTextField jTextFieldRespuestaCorrecta;
+    private javax.swing.JTextField jTextFieldRespuestaIncorrecta1;
+    private javax.swing.JTextField jTextFieldRespuestaIncorrecta2;
+    private javax.swing.JTextField jTextFieldRespuestaIncorrecta3;
+    private app.RoundedPanel roundedPanel1;
+    private app.RoundedPanel roundedPanelPregunta;
+    private app.RoundedPanel roundedPanelRespuestaCorrecta;
+    private app.RoundedPanel roundedPanelRespuestaIncorrecta1;
+    private app.RoundedPanel roundedPanelRespuestaIncorrecta2;
+    private app.RoundedPanel roundedPanelRespuestaIncorrecta3;
     // End of variables declaration//GEN-END:variables
 }

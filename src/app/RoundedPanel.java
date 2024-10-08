@@ -17,6 +17,11 @@ import javax.swing.JPanel;
  */
 public class RoundedPanel extends JPanel{
     private int radius; // Radio para las esquinas redondas
+    
+    public RoundedPanel() {
+        this.radius = 15;
+        setOpaque(false);
+    }
 
     public RoundedPanel(int radius) {
         this.radius = radius;
