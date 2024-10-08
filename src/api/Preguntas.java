@@ -2,7 +2,7 @@ package api;
 
 public class Preguntas {
 
-    private int id;
+    
     private String pregunta;// Almacena el texto de la pregunta
     private String respuestaCorrecta;// Almacena la respuesta correcta
     private String respuestaIncorrecta1;// Almacena la primera respuesta incorrecta
@@ -36,14 +36,7 @@ public class Preguntas {
     
    
     // Métodos getter y setter para acceder y modificar los atributos de la pregunta
-     public int getId() {    
-        return id;
-    }
-
-    
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public String getPregunta() {
         return pregunta;
