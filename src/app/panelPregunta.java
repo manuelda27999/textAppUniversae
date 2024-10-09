@@ -1,6 +1,5 @@
 package app;
 
-
 import api.Preguntas;
 import java.util.ArrayList;
 import app.utility.RoundedBorder;
@@ -12,12 +11,16 @@ public class panelPregunta extends javax.swing.JPanel {
 
     Dimension botonEliminarDimension = new Dimension(14, 14);
 
-
     public panelPregunta() {
-
         initComponents();
 
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
+    }
 
+    public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
+        initComponents();
+
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
     }
 
     public void iniciar(int index, ArrayList<Preguntas> lista) {
@@ -29,51 +32,36 @@ public class panelPregunta extends javax.swing.JPanel {
             String respuestaIncorrecta2 = lista.get(index).getRespuestaIncorrecta2();
             String respuestaIncorrecta3 = lista.get(index).getRespuestaIncorrecta3();
 
-            jTextFieldPregunta.setText(pregunta);
-            jTextFieldPregunta1.setText(respuestaCorrecta);
-            jTextFieldPregunta4.setText(respuestaIncorrecta1);
-            jTextFieldPregunta3.setText(respuestaIncorrecta2);
-            jTextFieldPregunta2.setText(respuestaIncorrecta3);
+            jTextAreaPregunta.setText(pregunta);
+            jTextFieldRespuestaCorrecta.setText(respuestaCorrecta);
+            jTextFieldRespuestaIncorrecta1.setText(respuestaIncorrecta1);
+            jTextFieldRespuestaIncorrecta2.setText(respuestaIncorrecta2);
+            jTextFieldRespuestaIncorrecta3.setText(respuestaIncorrecta3);
         }
 
     }
-    
+
     // Métodos para obtener los textos de los JTextField
     public String getPreguntaText() {
-        return jTextFieldPregunta.getText();
+        return jTextAreaPregunta.getText();
     }
 
     public String getRespuestaCorrectaText() {
-        return jTextFieldPregunta1.getText();
+        return jTextFieldRespuestaCorrecta.getText();
     }
 
     public String getRespuestaIncorrecta1Text() {
-        return jTextFieldPregunta4.getText();
+        return jTextFieldRespuestaIncorrecta1.getText();
     }
 
     public String getRespuestaIncorrecta2Text() {
-        return jTextFieldPregunta3.getText();
+        return jTextFieldRespuestaIncorrecta2.getText();
     }
 
     public String getRespuestaIncorrecta3Text() {
-        return jTextFieldPregunta2.getText();
-
-        //Establezco las dimensiones e imagen del botón de eliminar
-        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
-
+        return jTextFieldRespuestaIncorrecta3.getText();
     }
-
-    public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
-        initComponents();
-
-
-    }
-    
-   
-
-    
-   
-   
+    //Establezco las dimensiones e imagen del botón de eliminar
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -105,10 +93,8 @@ public class panelPregunta extends javax.swing.JPanel {
         roundedPanel1.setBackground(new java.awt.Color(26, 40, 55));
         roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelPregunta.setBackground(new java.awt.Color(26, 41, 54));
         jLabelPregunta.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPregunta.setText("Pregunta");
-
         roundedPanel1.add(jLabelPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 20));
 
         roundedPanelPregunta.setBackground(new java.awt.Color(72, 82, 93));
@@ -120,7 +106,6 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextAreaPregunta.setForeground(new java.awt.Color(255, 255, 255));
         jTextAreaPregunta.setLineWrap(true);
         jTextAreaPregunta.setRows(2);
-        jTextAreaPregunta.setText("¿Cuales de estos animales presenta un mayor riesgo de extinción?");
         jTextAreaPregunta.setWrapStyleWord(true);
         jTextAreaPregunta.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 6, 3, 6));
         jTextAreaPregunta.setOpaque(false);
@@ -140,7 +125,6 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextFieldRespuestaCorrecta.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldRespuestaCorrecta.setColumns(2);
         jTextFieldRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldRespuestaCorrecta.setText("Ajolote");
         jTextFieldRespuestaCorrecta.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
         jTextFieldRespuestaCorrecta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldRespuestaCorrecta.addActionListener(new java.awt.event.ActionListener() {
@@ -166,7 +150,6 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextFieldRespuestaIncorrecta1.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldRespuestaIncorrecta1.setColumns(2);
         jTextFieldRespuestaIncorrecta1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldRespuestaIncorrecta1.setText("Capibara");
         jTextFieldRespuestaIncorrecta1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
         jTextFieldRespuestaIncorrecta1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldRespuestaIncorrecta1.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +173,6 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextFieldRespuestaIncorrecta2.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldRespuestaIncorrecta2.setColumns(2);
         jTextFieldRespuestaIncorrecta2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldRespuestaIncorrecta2.setText("Panda");
         jTextFieldRespuestaIncorrecta2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
         jTextFieldRespuestaIncorrecta2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldRespuestaIncorrecta2.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +195,6 @@ public class panelPregunta extends javax.swing.JPanel {
         jTextFieldRespuestaIncorrecta3.setBackground(new java.awt.Color(72, 83, 93));
         jTextFieldRespuestaIncorrecta3.setColumns(2);
         jTextFieldRespuestaIncorrecta3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextFieldRespuestaIncorrecta3.setText("Koala");
         jTextFieldRespuestaIncorrecta3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 6));
         jTextFieldRespuestaIncorrecta3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextFieldRespuestaIncorrecta3.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +226,6 @@ public class panelPregunta extends javax.swing.JPanel {
         roundedPanel1.add(jLabelBotonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 20, 20));
 
         jPanelFondo.add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 330, 210));
-
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
