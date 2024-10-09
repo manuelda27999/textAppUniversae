@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
 
 public class main extends javax.swing.JFrame {
 
-
     private ArrayList<Preguntas> listaPreguntas = new ArrayList<>(); // Crea una lista de objetos de tipo 'Preguntas'.
     private ArrayList<panelPregunta> listaPanelesPreguntas = new ArrayList<>(); // Lista que almacena instancias de panelPregunta, cada una representando un panel de preguntas en la interfaz.
     private int contadorPaneles = 0;// Variable para contar el número de paneles que se han agregado.
@@ -21,12 +20,9 @@ public class main extends javax.swing.JFrame {
 
     Dimension buttonDimension = new Dimension(20, 20);
 
-
     public main() {
 
         initComponents();
-
-
         
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
@@ -132,7 +128,7 @@ public class main extends javax.swing.JFrame {
         panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
         nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
         showPanel(nuevoPanel);// Muestra el nuevo panel en la interfaz.
-        listaPanelesPreguntas.add(nuevoPanel);
+        listaPanelesPreguntas.add(0,nuevoPanel);
         nuevoPanel.iniciar(contadorPaneles, lista);// Inicializa el panel con el número de panel y la lista de preguntas.
 
         // Muestra la lista de preguntas en la consola para verificar
@@ -146,7 +142,7 @@ public class main extends javax.swing.JFrame {
         panelName.setLocation(0, 0);
         panelName.setVisible(true);
 
-        jPanelListadoPreguntas.add(panelName);
+        jPanelListadoPreguntas.add( panelName, 0);
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
     }
@@ -260,13 +256,14 @@ public class main extends javax.swing.JFrame {
 
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
+        jScrollPane.setToolTipText("");
         jScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         jPanelListadoPreguntas.setBackground(new java.awt.Color(5, 21, 37));
         jPanelListadoPreguntas.setLayout(new javax.swing.BoxLayout(jPanelListadoPreguntas, javax.swing.BoxLayout.PAGE_AXIS));
         jScrollPane.setViewportView(jPanelListadoPreguntas);
 
-        jPanelPrincipal.add(jScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 360, 630));
+        jPanelPrincipal.add(jScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 370, 630));
 
         jPanelButton.setOpaque(false);
         jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
