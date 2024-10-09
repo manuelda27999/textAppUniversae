@@ -11,30 +11,24 @@ import javax.swing.JPanel;
 
 import javax.swing.JScrollPane;
 
-/**
- *
- * @author ManuelDa
- */
 public class main extends javax.swing.JFrame {
 
+    private ArrayList<Preguntas> listaPreguntas = new ArrayList<>(); // Crea una lista de objetos de tipo 'Preguntas'.
+    private ArrayList<panelPregunta> listaPanelesPreguntas = new ArrayList<>(); // Lista que almacena instancias de panelPregunta, cada una representando un panel de preguntas en la interfaz.
     private int contadorPaneles = 0;// Variable para contar el número de paneles que se han agregado.
     public String rutaCSV = "src/api/datos.csv";// Ruta al archivo CSV que contiene los datos.
-    
 
     public main() {
 
         initComponents();
-        
-        ArrayList<Preguntas> listaPreguntas = new ArrayList<>(); // Crea una lista de objetos de tipo 'Preguntas'.
 
+        
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
         System.out.println(listaPreguntas);
 
         // Recorre la lista de preguntas y actualiza los paneles en la interfaz según los datos del CSV.
-        for (int i = 0; i < listaPreguntas.size(); i++) {
-            actualizarPanelSegunCSV(listaPreguntas);
-        }
+        actualizarPanelesConWhile(listaPreguntas);
 
         // Establecer imagen y dimensiones del desplegable
         Dimension desplegableDimension = new Dimension(346, 40);
@@ -57,10 +51,10 @@ public class main extends javax.swing.JFrame {
 
                 AgregarPanelPreguntas(listaPreguntas);// Agrega un nuevo panel de preguntas a la interfaz.
                 System.out.println(contadorPaneles);
-
             }
 
         });
+
         
         // Añade un listener al botón jLabelButton para capturar eventos de clic.
         jLabelButton.addMouseListener(new MouseAdapter() {
@@ -68,19 +62,60 @@ public class main extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
-                panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de pregunta.
-                utilityCSV.obtenerPreguntasDeCampos(listaPreguntas, nuevoPanel);
+                // Limpiar la listaPreguntas para evitar duplicados al guardar
+                listaPreguntas.clear();
                 
-                
-                // Añade la nueva pregunta al archivo CSV.
+                // Iterar a través de todos los paneles y capturar los datos
+                for (panelPregunta panel : listaPanelesPreguntas) {
+                    
+                    // Captura los datos del panel
+                    String pregunta = panel.getPreguntaText(); // Obtiene la pregunta
+                    String respuestaCorrecta = panel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
+                    String respuestaIncorrecta1 = panel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta incorrecta
+                    String respuestaIncorrecta2 = panel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta incorrecta
+                    String respuestaIncorrecta3 = panel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta incorrecta
+
+                    // Verifica que todos los campos tengan texto antes de crear una nueva pregunta
+                    if (pregunta != null && respuestaCorrecta != null
+                            && respuestaIncorrecta1 != null && respuestaIncorrecta2 != null
+                            && respuestaIncorrecta3 != null) {
+                        
+                        // Crea un nuevo objeto Preguntas
+                        Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
+
+                        // Agrega la nueva pregunta a la lista
+                        listaPreguntas.add(nuevaPregunta);
+                        System.out.println("Nueva pregunta añadida: " + nuevaPregunta);
+ 
+                    } else {
+                        System.out.println("No se puede agregar una pregunta vacía.");
+                    }
+                }
                 utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
                 System.out.println(listaPreguntas);
                 System.out.println(contadorPaneles);
 
             }
 
-        });
-       
+        }
+        );
+
+    }
+
+    // Método para agregar un panel con preguntas que se encuentran el csv.
+    public void actualizarPanelesConWhile(ArrayList<Preguntas> listaPreguntas) {
+        int indice = 0;
+        while (indice < listaPreguntas.size()) {
+            
+            panelPregunta nuevoPanel = new panelPregunta();
+            nuevoPanel.padre = this;
+            nuevoPanel.iniciar(indice, listaPreguntas);
+            showPanel(nuevoPanel);
+            listaPanelesPreguntas.add(nuevoPanel);
+            indice++;
+            contadorPaneles++;
+
+        }
     }
 
     // Método para agregar un panel con preguntas a la interfaz.
@@ -90,36 +125,11 @@ public class main extends javax.swing.JFrame {
         panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
         nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
         showPanel(nuevoPanel);// Muestra el nuevo panel en la interfaz.
+        listaPanelesPreguntas.add(nuevoPanel);
         nuevoPanel.iniciar(contadorPaneles, lista);// Inicializa el panel con el número de panel y la lista de preguntas.
-        
-        
-        // Captura los datos del panel
-        String pregunta = nuevoPanel.getPreguntaText(); // Obtiene la pregunta
-        String respuestaCorrecta = nuevoPanel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
-        String respuestaIncorrecta1 = nuevoPanel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta incorrecta
-        String respuestaIncorrecta2 = nuevoPanel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta incorrecta
-        String respuestaIncorrecta3 = nuevoPanel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta incorrecta
 
-        // Crea un nuevo objeto Preguntas
-        Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
-
-        // Agrega la nueva pregunta a la lista
-        lista.add(nuevaPregunta);
-        
         // Muestra la lista de preguntas en la consola para verificar
         System.out.println("Preguntas actuales en la lista: " + lista);
-    
-
-    }
-
-    // Método para agregar un panel con preguntas que se encuentran el csv.
-    public void actualizarPanelSegunCSV(ArrayList<Preguntas> lista2) {
-
-        panelPregunta nuevoPanel = new panelPregunta();
-        nuevoPanel.padre = this;
-        showPanel(nuevoPanel);
-        nuevoPanel.iniciar(contadorPaneles++, lista2);
-        System.out.println(contadorPaneles);
 
     }
 

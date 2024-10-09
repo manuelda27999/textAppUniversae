@@ -2,16 +2,9 @@ package app;
 
 import api.Preguntas;
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-;
-
-/**
- *
- * @author ManuelDa
- */
 public class panelPregunta extends javax.swing.JPanel {
 
     public main padre;
@@ -53,28 +46,6 @@ public class panelPregunta extends javax.swing.JPanel {
             jTextFieldPregunta3.setText(respuestaIncorrecta2);
             jTextFieldPregunta2.setText(respuestaIncorrecta3);
         }
-        
-        
-
-//            String pregunta = jTextFieldPregunta.getText();
-//            String respuestaCorrecta = jTextFieldPregunta1.getText();
-//            String respuestaIncorrecta1 = jTextFieldPregunta4.getText();
-//            String respuestaIncorrecta2 = jTextFieldPregunta3.getText();
-//            String respuestaIncorrecta3 = jTextFieldPregunta2.getText();
-            
-//            Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
-//
-//            if (!pregunta.isEmpty() && !respuestaCorrecta.isEmpty()
-//                    && !respuestaIncorrecta1.isEmpty() && !respuestaIncorrecta2.isEmpty()
-//                    && !respuestaIncorrecta3.isEmpty()) {
-//
-//                
-//                lista.add(nuevaPregunta);
-//
-//            } else {
-//                System.out.println("Los campos estan vacios.");
-//            }
-//        }
 
     }
     
@@ -88,7 +59,7 @@ public class panelPregunta extends javax.swing.JPanel {
     }
 
     public String getRespuestaIncorrecta1Text() {
-        return jTextFieldPregunta2.getText();
+        return jTextFieldPregunta4.getText();
     }
 
     public String getRespuestaIncorrecta2Text() {
@@ -96,7 +67,7 @@ public class panelPregunta extends javax.swing.JPanel {
     }
 
     public String getRespuestaIncorrecta3Text() {
-        return jTextFieldPregunta4.getText();
+        return jTextFieldPregunta2.getText();
     }
     
    
