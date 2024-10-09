@@ -2,8 +2,9 @@ package app;
 
 import api.Preguntas;
 import api.utilityCSV;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -24,11 +25,30 @@ public class main extends javax.swing.JFrame {
     public main() {
 
         initComponents();
-        
-        PanelMensaje panelMensaje = new PanelMensaje(11, 3);
+
+        //Crear un panel de mensaje
+        PanelMensaje panelMensaje = new PanelMensaje(3);
         jPanelContainerMensaje.add(panelMensaje);
         jPanelContainerMensaje.revalidate();
         jPanelContainerMensaje.repaint();
+
+        //Pruebas para el hacer la barra de scroll
+        jScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                System.out.println(e.getValue());
+                
+                int altoScroll = jScrollPane.getHeight();
+
+                roundedPanelBarritaScroll.setLocation(0, e.getValue());
+                roundedPanelBarritaScroll.revalidate();
+                roundedPanelBarritaScroll.repaint();
+            }
+        });
+
+        int y = roundedPanelBarritaScroll.getY();
+        System.out.println(y);
 
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
@@ -108,7 +128,6 @@ public class main extends javax.swing.JFrame {
         }
         );
 
-        
     }
 
     // Método para agregar un panel con preguntas que se encuentran el csv.
@@ -173,6 +192,8 @@ public class main extends javax.swing.JFrame {
         jLabelAñadirUnaPregunta = new javax.swing.JLabel();
         jLabelButtonAñadir = new javax.swing.JLabel();
         jLabelButtonInfo = new javax.swing.JLabel();
+        roundedPanelContenedorBarritaScroll = new app.RoundedPanel();
+        roundedPanelBarritaScroll = new app.RoundedPanel();
         jScrollPane = new javax.swing.JScrollPane();
         jPanelListadoPreguntas = new javax.swing.JPanel();
         jPanelButton = new javax.swing.JPanel();
@@ -261,6 +282,28 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelAñadirUnaPregunta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
 
+        roundedPanelContenedorBarritaScroll.setBackground(new java.awt.Color(73, 82, 92));
+        roundedPanelContenedorBarritaScroll.setOpaque(true);
+        roundedPanelContenedorBarritaScroll.setLayout(null);
+
+        roundedPanelBarritaScroll.setBackground(new java.awt.Color(105, 254, 254));
+
+        javax.swing.GroupLayout roundedPanelBarritaScrollLayout = new javax.swing.GroupLayout(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setLayout(roundedPanelBarritaScrollLayout);
+        roundedPanelBarritaScrollLayout.setHorizontalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        roundedPanelBarritaScrollLayout.setVerticalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
+        roundedPanelContenedorBarritaScroll.add(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setBounds(0, 0, 10, 70);
+
+        jPanelPrincipal.add(roundedPanelContenedorBarritaScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 10, 630));
+
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
         jScrollPane.setToolTipText("");
@@ -295,6 +338,7 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 830, 430, 110));
 
+        jLabelfondo.setBackground(new java.awt.Color(73, 82, 92));
         jLabelfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Fondo.png"))); // NOI18N
         jPanelPrincipal.add(jLabelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 940));
 
@@ -385,5 +429,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelListadoPreguntas;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JScrollPane jScrollPane;
+    private app.RoundedPanel roundedPanelBarritaScroll;
+    private app.RoundedPanel roundedPanelContenedorBarritaScroll;
     // End of variables declaration//GEN-END:variables
 }
