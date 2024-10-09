@@ -25,7 +25,7 @@ public class main extends javax.swing.JFrame {
 
         initComponents();
         
-        PanelMensaje panelMensaje = new PanelMensaje("Ivan te voy a robar al perro", 5, Color.WHITE);
+        PanelMensaje panelMensaje = new PanelMensaje(11, 3);
         jPanelContainerMensaje.add(panelMensaje);
         jPanelContainerMensaje.revalidate();
         jPanelContainerMensaje.repaint();
