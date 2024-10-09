@@ -10,9 +10,7 @@ public class panelPregunta extends javax.swing.JPanel {
     public main padre;
 
     public panelPregunta() {
-
         initComponents();
-
     }
 
     public void iniciar(int index, ArrayList<Preguntas> lista) {
@@ -34,6 +32,7 @@ public class panelPregunta extends javax.swing.JPanel {
 
         
         if (index < lista.size()) {
+            
             String pregunta = lista.get(index).getPregunta();
             String respuestaCorrecta = lista.get(index).getRespuestaCorrecta();
             String respuestaIncorrecta1 = lista.get(index).getRespuestaIncorrecta1();

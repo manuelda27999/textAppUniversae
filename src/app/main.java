@@ -19,10 +19,8 @@ public class main extends javax.swing.JFrame {
     public String rutaCSV = "src/api/datos.csv";// Ruta al archivo CSV que contiene los datos.
 
     public main() {
-
         initComponents();
 
-        
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
         System.out.println(listaPreguntas);
@@ -30,7 +28,7 @@ public class main extends javax.swing.JFrame {
         // Recorre la lista de preguntas y actualiza los paneles en la interfaz según los datos del CSV.
         actualizarPanelesConWhile(listaPreguntas);
 
-        // Establecer imagen y dimensiones del desplegable
+        // Establecer imagen y dimensiones del desplegable.
         Dimension desplegableDimension = new Dimension(346, 40);
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
 
@@ -55,19 +53,18 @@ public class main extends javax.swing.JFrame {
 
         });
 
-        
         // Añade un listener al botón jLabelButton para capturar eventos de clic.
         jLabelButton.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
                 // Limpiar la listaPreguntas para evitar duplicados al guardar
                 listaPreguntas.clear();
-                
+
                 // Iterar a través de todos los paneles y capturar los datos
                 for (panelPregunta panel : listaPanelesPreguntas) {
-                    
+
                     // Captura los datos del panel
                     String pregunta = panel.getPreguntaText(); // Obtiene la pregunta
                     String respuestaCorrecta = panel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
@@ -79,14 +76,14 @@ public class main extends javax.swing.JFrame {
                     if (pregunta != null && respuestaCorrecta != null
                             && respuestaIncorrecta1 != null && respuestaIncorrecta2 != null
                             && respuestaIncorrecta3 != null) {
-                        
+
                         // Crea un nuevo objeto Preguntas
                         Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
 
                         // Agrega la nueva pregunta a la lista
                         listaPreguntas.add(nuevaPregunta);
                         System.out.println("Nueva pregunta añadida: " + nuevaPregunta);
- 
+
                     } else {
                         System.out.println("No se puede agregar una pregunta vacía.");
                     }
@@ -106,11 +103,17 @@ public class main extends javax.swing.JFrame {
     public void actualizarPanelesConWhile(ArrayList<Preguntas> listaPreguntas) {
         int indice = 0;
         while (indice < listaPreguntas.size()) {
-            
+
             panelPregunta nuevoPanel = new panelPregunta();
             nuevoPanel.padre = this;
             nuevoPanel.iniciar(indice, listaPreguntas);
-            showPanel(nuevoPanel);
+            nuevoPanel.setSize(344, 200);
+            nuevoPanel.setLocation(0, 0);
+            nuevoPanel.setVisible(true);
+
+            jPanelListadoPreguntas.add(nuevoPanel);
+            jPanelListadoPreguntas.revalidate();
+            jPanelListadoPreguntas.repaint();
             listaPanelesPreguntas.add(nuevoPanel);
             indice++;
             contadorPaneles++;
@@ -124,8 +127,14 @@ public class main extends javax.swing.JFrame {
         contadorPaneles++;// Incrementa el contador de paneles.
         panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
         nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
-        showPanel(nuevoPanel);// Muestra el nuevo panel en la interfaz.
-        listaPanelesPreguntas.add(nuevoPanel);
+        nuevoPanel.setSize(344, 200);
+        nuevoPanel.setLocation(0, 0);
+        nuevoPanel.setVisible(true);
+
+        jPanelListadoPreguntas.add(nuevoPanel, 0);
+        jPanelListadoPreguntas.revalidate();
+        jPanelListadoPreguntas.repaint();
+        listaPanelesPreguntas.add(0, nuevoPanel);
         nuevoPanel.iniciar(contadorPaneles, lista);// Inicializa el panel con el número de panel y la lista de preguntas.
 
         // Muestra la lista de preguntas en la consola para verificar
@@ -135,20 +144,8 @@ public class main extends javax.swing.JFrame {
 
     private void showPanel(JPanel panelName) {
 
-        panelName.setSize(344, 200);
-        panelName.setLocation(0, 0);
-        panelName.setVisible(true);
-
-        jPanelListadoPreguntas.add(panelName);
-        jPanelListadoPreguntas.revalidate();
-        jPanelListadoPreguntas.repaint();
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -236,6 +233,7 @@ public class main extends javax.swing.JFrame {
 
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
+        jScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jPanelListadoPreguntas.setBackground(new java.awt.Color(51, 255, 204));
         jPanelListadoPreguntas.setLayout(new javax.swing.BoxLayout(jPanelListadoPreguntas, javax.swing.BoxLayout.PAGE_AXIS));
