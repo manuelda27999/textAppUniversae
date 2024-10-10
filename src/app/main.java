@@ -9,8 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class main extends javax.swing.JFrame {
 
@@ -23,26 +23,25 @@ public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
-        
-        showMessage(8, 12);
 
-        //Pruebas para el hacer la barra de scroll
+        showMessage(7);
+
+        //Funcionalidad de la barra de scroll
         jScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
-                
+
                 double heightScrollPane = jScrollPane.getHeight();
                 double heightPanelListadoPreguntas = jPanelListadoPreguntas.getHeight();
-                
+
                 double porcentaje = heightScrollPane / heightPanelListadoPreguntas;
-                System.out.println(porcentaje);
-                
+
                 double newHeight = heightScrollPane * porcentaje;
                 double newY = e.getValue() * porcentaje;
-                
+
                 int altoScroll = jScrollPane.getHeight();
-                roundedPanelBarritaScroll.setBounds(0, (int)newY, 10,(int)newHeight);
+                roundedPanelBarritaScroll.setBounds(0, (int) newY, 10, (int) newHeight);
                 roundedPanelBarritaScroll.revalidate();
                 roundedPanelBarritaScroll.repaint();
             }
@@ -64,11 +63,12 @@ public class main extends javax.swing.JFrame {
         // Establecer imagen y dimensiones de los botones
         utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
-        
+
         //Elimina la barra de scroll en el scrollPanel
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+        jScrollPane.getVerticalScrollBar().setValue(0);
 
         // Añade un listener al botón de añadir para capturar eventos de clic.
         jLabelButtonAñadir.addMouseListener(new MouseAdapter() {
@@ -87,7 +87,7 @@ public class main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                boolean todoCorrecto = true;
                 // Limpiar la listaPreguntas para evitar duplicados al guardar
                 listaPreguntas.clear();
 
@@ -98,16 +98,15 @@ public class main extends javax.swing.JFrame {
                     String pregunta = panel.getPreguntaText(); // Obtiene la pregunta
                     String respuestaCorrecta = panel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
                     String respuestaIncorrecta1 = panel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta
-                                                                                       // incorrecta
+                    // incorrecta
                     String respuestaIncorrecta2 = panel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta
-                                                                                       // incorrecta
+                    // incorrecta
                     String respuestaIncorrecta3 = panel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta
-                                                                                       // incorrecta
+                    // incorrecta
 
                     // Verifica que todos los campos tengan texto antes de crear una nueva pregunta
-                    if (pregunta != null && respuestaCorrecta != null
-                            && respuestaIncorrecta1 != null && respuestaIncorrecta2 != null
-                            && respuestaIncorrecta3 != null) {
+                    if (!pregunta.isEmpty() && !respuestaCorrecta.isEmpty() && !respuestaIncorrecta1.isEmpty()
+                            && !respuestaIncorrecta2.isEmpty() && !respuestaIncorrecta3.isEmpty()) {
 
                         // Crea un nuevo objeto Preguntas
                         Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1,
@@ -115,18 +114,19 @@ public class main extends javax.swing.JFrame {
 
                         // Agrega la nueva pregunta a la lista
                         listaPreguntas.add(nuevaPregunta);
-                        System.out.println("Nueva pregunta añadida: " + nuevaPregunta);
-
                     } else {
-                        System.out.println("No se puede agregar una pregunta vacía.");
+                        todoCorrecto = false;
                     }
                 }
-                utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
-                System.out.println(listaPreguntas);
-                System.out.println(contadorPaneles);
+
+                if (todoCorrecto) {
+                    utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
+                    showMessage(8, listaPreguntas.size());
+                } else {
+                    showMessage(3);
+                }
 
             }
-
 
             //Establecer dimensiones de los paneles de preguntas
             Dimension panelPreguntaDimension = new Dimension(350, 220);
@@ -138,6 +138,11 @@ public class main extends javax.swing.JFrame {
     // Método para agregar un panel con preguntas que se encuentran el csv.
     public void actualizarPanelesConWhile(ArrayList<Preguntas> listaPreguntas) {
         int indice = 0;
+
+        if (listaPreguntas.size() == 0) {
+            showMessage(5);
+        }
+
         while (indice < listaPreguntas.size()) {
 
             panelPregunta nuevoPanel = new panelPregunta();
@@ -148,12 +153,22 @@ public class main extends javax.swing.JFrame {
             nuevoPanel.setVisible(true);
 
             jPanelListadoPreguntas.add(nuevoPanel);
+            jScrollPane.getVerticalScrollBar().setValue(0);
             jPanelListadoPreguntas.revalidate();
             jPanelListadoPreguntas.repaint();
             listaPanelesPreguntas.add(nuevoPanel);
             indice++;
             contadorPaneles++;
 
+            jScrollPane.revalidate();
+            jScrollPane.repaint();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    jScrollPane.getVerticalScrollBar().setValue(0);
+                }
+            });
         }
     }
 
@@ -161,7 +176,7 @@ public class main extends javax.swing.JFrame {
     public void AgregarPanelPreguntas(ArrayList<Preguntas> lista) {
 
         contadorPaneles++;// Incrementa el contador de paneles.
-        panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
+        panelPregunta nuevoPanel = new panelPregunta("nuevo");// Crea un nuevo panel de preguntas.
         nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
         nuevoPanel.setSize(344, 200);
         nuevoPanel.setLocation(0, 0);
@@ -173,34 +188,35 @@ public class main extends javax.swing.JFrame {
         listaPanelesPreguntas.add(0, nuevoPanel);
         nuevoPanel.iniciar(contadorPaneles, lista, listaPanelesPreguntas);// Inicializa el panel con el número de panel y la lista de                                          
 
-
         // Muestra la lista de preguntas en la consola para verificar
         System.out.println("Preguntas actuales en la lista: " + lista);
 
+        jScrollPane.getVerticalScrollBar().setValue(0);
+        showMessage(10, listaPanelesPreguntas.size());
     }
 
-    
-    
     public void eliminarPanel(panelPregunta panel) {
         // Elimina el panel del contenedor visual
         jPanelListadoPreguntas.remove(panel);
-        
+
         // Elimina el panel de la lista.
         listaPanelesPreguntas.remove(panel);
-        
+
         // Actualiza la vista
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
+
+        showMessage(11, listaPanelesPreguntas.size());
     }
-    
+
     //Crea un panel de mensaje
-    private void showMessage(int numeroMensaje){
+    private void showMessage(int numeroMensaje) {
         PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje);
         jPanelContainerMensaje.add(panelMensaje);
         jPanelContainerMensaje.revalidate();
         jPanelContainerMensaje.repaint();
     }
-    
+
     private void showMessage(int numeroMensaje, int cantidad) {
         PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje, cantidad);
         jPanelContainerMensaje.add(panelMensaje);
