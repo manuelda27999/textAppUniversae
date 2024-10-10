@@ -5,25 +5,32 @@ import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import javax.swing.border.EmptyBorder;
 
 public class panelPregunta extends javax.swing.JPanel {
 
     public main padre;
-    
+
     Dimension botonEliminarDimension = new Dimension(14, 14);
 
     public panelPregunta() {
         initComponents();
-     utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
-    }
-
-    public panelPregunta(String pregunta, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
-        initComponents();
 
         utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
     }
-    
+
+    public panelPregunta(String nuevo) {
+        initComponents();
+
+        jTextAreaPregunta.setEditable(true);
+        jTextFieldRespuestaCorrecta.setEditable(true);
+        jTextFieldRespuestaIncorrecta1.setEditable(true);
+        jTextFieldRespuestaIncorrecta2.setEditable(true);
+        jTextFieldRespuestaIncorrecta3.setEditable(true);
+
+        utility.SetImageLabel(jLabelBotonEliminar, "src/app/InterfazMobile/Menos_Off.png", botonEliminarDimension);
+    }
+
     public void iniciar(int index, ArrayList<Preguntas> lista, ArrayList<panelPregunta> listaPaneles) {
 
         if (index < lista.size()) {
@@ -39,26 +46,30 @@ public class panelPregunta extends javax.swing.JPanel {
             jTextFieldRespuestaIncorrecta1.setText(respuestaIncorrecta1);
             jTextFieldRespuestaIncorrecta2.setText(respuestaIncorrecta2);
             jTextFieldRespuestaIncorrecta3.setText(respuestaIncorrecta3);
+
+            System.out.println(jTextAreaPregunta.getText().length());
+
+            if (jTextAreaPregunta.getText().length() < 50) {
+                EmptyBorder borde = new EmptyBorder(11, 3, 11, 3);
+                jTextAreaPregunta.setBorder(borde);
+            }
         }
-        
+
         jLabelBotonEliminar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
-                
-                int preguntasEliminadas = 0;
-                
+
                 eliminarPanel();
-                
-                //Pregunta eliminada (quedan X)
+
             }
         });
-
     }
-    
+
     // Eliminar el panel del contenedor padre
+
     private void eliminarPanel(){
         this.padre.eliminarPanelPadre(this);
+
     }
 
     // Métodos para obtener los textos de los JTextField

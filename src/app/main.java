@@ -3,12 +3,14 @@ package app;
 import api.Preguntas;
 import api.utilityCSV;
 import java.awt.Dimension;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class main extends javax.swing.JFrame {
 
@@ -24,6 +26,29 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
 
+        showMessage(7);
+
+        //Funcionalidad de la barra de scroll
+        jScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+
+                double heightScrollPane = jScrollPane.getHeight();
+                double heightPanelListadoPreguntas = jPanelListadoPreguntas.getHeight();
+
+                double porcentaje = heightScrollPane / heightPanelListadoPreguntas;
+
+                double newHeight = heightScrollPane * porcentaje;
+                double newY = e.getValue() * porcentaje;
+
+                int altoScroll = jScrollPane.getHeight();
+                roundedPanelBarritaScroll.setBounds(0, (int) newY, 10, (int) newHeight);
+                roundedPanelBarritaScroll.revalidate();
+                roundedPanelBarritaScroll.repaint();
+            }
+        });
+
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
         System.out.println(listaPreguntas);
@@ -33,20 +58,22 @@ public class main extends javax.swing.JFrame {
         // los datos del CSV.
         actualizarPanelesConWhile(listaPreguntas);
 
-        // Establecer imagen y dimensiones del desplegable.
-        Dimension desplegableDimension = new Dimension(346, 40);
+        //Establecer imagen y dimensiones del desplegable
+        Dimension desplegableDimension = new Dimension(340, 40);
+
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
 
         // Establecer imagen y dimensiones de los botones
         utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
 
-        
+
+        //Elimina la barra de scroll en el scrollPanel
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
-        
-        
+        jScrollPane.getVerticalScrollBar().setValue(0);
+
         // Añade un listener al botón de añadir para capturar eventos de clic.
         jLabelButtonAñadir.addMouseListener(new MouseAdapter() {
 
@@ -71,7 +98,9 @@ public class main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
+                boolean todoCorrecto = true;
+
                 // Limpiar la listaPreguntas para evitar duplicados al guardar
                 listaPreguntas.clear();
 
@@ -90,10 +119,10 @@ public class main extends javax.swing.JFrame {
                     String respuestaIncorrecta3 = panel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta incorrecta
                                                                                        
 
+
                     // Verifica que todos los campos tengan texto antes de crear una nueva pregunta
-                    if (pregunta != null && respuestaCorrecta != null
-                            && respuestaIncorrecta1 != null && respuestaIncorrecta2 != null
-                            && respuestaIncorrecta3 != null) {
+                    if (!pregunta.isEmpty() && !respuestaCorrecta.isEmpty() && !respuestaIncorrecta1.isEmpty()
+                            && !respuestaIncorrecta2.isEmpty() && !respuestaIncorrecta3.isEmpty()) {
 
                         // Crea un nuevo objeto Preguntas
                         Preguntas nuevaPregunta = new Preguntas(pregunta, respuestaCorrecta, respuestaIncorrecta1,
@@ -101,27 +130,23 @@ public class main extends javax.swing.JFrame {
 
                         // Agrega la nueva pregunta a la lista
                         listaPreguntas.add(nuevaPregunta);
-                        
-                        System.out.println("Nueva pregunta añadida: " + nuevaPregunta);
 
                     } else {
-                        System.out.println("No se puede agregar una pregunta vacía.");
+                        todoCorrecto = false;
                     }
                 }
-                
-                utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
-                
-                utilityCSV.copiarArchivoCSVEnRutaNueva();
-                
-                try {
-                    utilityCSV.comprimir(rutaArchivo, rutaArchivoFinal);
-                } catch (Exception error) {
-                    System.err.println("Error al comprimir el archivo: " + error);
+
+                if (todoCorrecto) {
+                    utilityCSV.crearYAnexarAArchivoCsv(rutaCSV, listaPreguntas);
+                    showMessage(8, listaPreguntas.size());
+                } else {
+                    showMessage(3);
+
                 }
 
             }
 
-            // Establecer dimensiones de los paneles de preguntas
+            //Establecer dimensiones de los paneles de preguntas
             Dimension panelPreguntaDimension = new Dimension(350, 220);
 
         });
@@ -132,6 +157,11 @@ public class main extends javax.swing.JFrame {
     // Método para agregar un panel con preguntas que se encuentran el csv.
     public void actualizarPanelesConWhile(ArrayList<Preguntas> listaPreguntas) {
         int indice = 0;
+
+        if (listaPreguntas.size() == 0) {
+            showMessage(5);
+        }
+
         while (indice < listaPreguntas.size()) {
 
             panelPregunta nuevoPanel = new panelPregunta();
@@ -142,12 +172,22 @@ public class main extends javax.swing.JFrame {
             nuevoPanel.setVisible(true);
 
             jPanelListadoPreguntas.add(nuevoPanel);
+            jScrollPane.getVerticalScrollBar().setValue(0);
             jPanelListadoPreguntas.revalidate();
             jPanelListadoPreguntas.repaint();
             listaPanelesPreguntas.add(nuevoPanel);
             indice++;
             contadorPaneles++;
 
+            jScrollPane.revalidate();
+            jScrollPane.repaint();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    jScrollPane.getVerticalScrollBar().setValue(0);
+                }
+            });
         }
     }
 
@@ -155,7 +195,7 @@ public class main extends javax.swing.JFrame {
     public void AgregarPanelPreguntas(ArrayList<Preguntas> lista) {
 
         contadorPaneles++;// Incrementa el contador de paneles.
-        panelPregunta nuevoPanel = new panelPregunta();// Crea un nuevo panel de preguntas.
+        panelPregunta nuevoPanel = new panelPregunta("nuevo");// Crea un nuevo panel de preguntas.
         nuevoPanel.padre = this;// Establece la referencia del padre (ventana principal).
         nuevoPanel.setSize(344, 200);
         nuevoPanel.setLocation(0, 0);
@@ -165,26 +205,45 @@ public class main extends javax.swing.JFrame {
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
         listaPanelesPreguntas.add(0, nuevoPanel);
-        nuevoPanel.iniciar(contadorPaneles, lista, listaPanelesPreguntas);// Inicializa el panel con el número de panel y la lista de
-                                                  
+        nuevoPanel.iniciar(contadorPaneles, lista, listaPanelesPreguntas);// Inicializa el panel con el número de panel y la lista de                                          
 
         // Muestra la lista de preguntas en la consola para verificar
         System.out.println("Preguntas actuales en la lista: " + lista);
 
+        jScrollPane.getVerticalScrollBar().setValue(0);
+        showMessage(10, listaPanelesPreguntas.size());
     }
+
     
     
     public void eliminarPanelPadre(panelPregunta panel) {
-        
+
         // Elimina el panel del contenedor visual
         jPanelListadoPreguntas.remove(panel);
-        
+
         // Elimina el panel de la lista.
         listaPanelesPreguntas.remove(panel);
-        
+
         // Actualiza la vista
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
+
+        showMessage(11, listaPanelesPreguntas.size());
+    }
+
+    //Crea un panel de mensaje
+    private void showMessage(int numeroMensaje) {
+        PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje);
+        jPanelContainerMensaje.add(panelMensaje);
+        jPanelContainerMensaje.revalidate();
+        jPanelContainerMensaje.repaint();
+    }
+
+    private void showMessage(int numeroMensaje, int cantidad) {
+        PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje, cantidad);
+        jPanelContainerMensaje.add(panelMensaje);
+        jPanelContainerMensaje.revalidate();
+        jPanelContainerMensaje.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -203,9 +262,12 @@ public class main extends javax.swing.JFrame {
         jLabelAñadirUnaPregunta = new javax.swing.JLabel();
         jLabelButtonAñadir = new javax.swing.JLabel();
         jLabelButtonInfo = new javax.swing.JLabel();
+        roundedPanelContenedorBarritaScroll = new app.RoundedPanel();
+        roundedPanelBarritaScroll = new app.RoundedPanel();
         jScrollPane = new javax.swing.JScrollPane();
         jPanelListadoPreguntas = new javax.swing.JPanel();
         jPanelButton = new javax.swing.JPanel();
+        jPanelContainerMensaje = new javax.swing.JPanel();
         jLabelButtonText = new javax.swing.JLabel();
         jLabelButton = new javax.swing.JLabel();
         jLabelfondo = new javax.swing.JLabel();
@@ -297,6 +359,27 @@ public class main extends javax.swing.JFrame {
         jPanelPrincipal.add(jPanelAñadirUnaPregunta,
                 new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
 
+        roundedPanelContenedorBarritaScroll.setBackground(new java.awt.Color(73, 82, 92));
+        roundedPanelContenedorBarritaScroll.setLayout(null);
+
+        roundedPanelBarritaScroll.setBackground(new java.awt.Color(105, 254, 254));
+
+        javax.swing.GroupLayout roundedPanelBarritaScrollLayout = new javax.swing.GroupLayout(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setLayout(roundedPanelBarritaScrollLayout);
+        roundedPanelBarritaScrollLayout.setHorizontalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        roundedPanelBarritaScrollLayout.setVerticalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
+        roundedPanelContenedorBarritaScroll.add(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setBounds(0, 0, 10, 70);
+
+        jPanelPrincipal.add(roundedPanelContenedorBarritaScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 10, 630));
+
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
         jScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -310,6 +393,10 @@ public class main extends javax.swing.JFrame {
 
         jPanelButton.setOpaque(false);
         jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelContainerMensaje.setOpaque(false);
+        jPanelContainerMensaje.setLayout(new java.awt.BorderLayout());
+        jPanelButton.add(jPanelContainerMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 430, 40));
 
         jLabelButtonText.setFont(new java.awt.Font("Raleway SemiBold", 0, 18)); // NOI18N
         jLabelButtonText.setForeground(new java.awt.Color(31, 45, 57));
@@ -327,6 +414,7 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 830, 430, 110));
 
+        jLabelfondo.setBackground(new java.awt.Color(73, 82, 92));
         jLabelfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Fondo.png"))); // NOI18N
         jPanelPrincipal.add(jLabelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 940));
 
@@ -413,9 +501,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelfondo;
     private javax.swing.JPanel jPanelAñadirUnaPregunta;
     private javax.swing.JPanel jPanelButton;
+    private javax.swing.JPanel jPanelContainerMensaje;
     private javax.swing.JPanel jPanelDesplegable;
     private javax.swing.JPanel jPanelListadoPreguntas;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JScrollPane jScrollPane;
+    private app.RoundedPanel roundedPanelBarritaScroll;
+    private app.RoundedPanel roundedPanelContenedorBarritaScroll;
     // End of variables declaration//GEN-END:variables
 }
