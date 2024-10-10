@@ -8,10 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPanel;
 
-/**
- *
- * @author ManuelDa
- */
+
 public class RoundedPanel extends JPanel{
     private int radius; // Radio para las esquinas redondas
     

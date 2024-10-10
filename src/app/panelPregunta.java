@@ -45,9 +45,12 @@ public class panelPregunta extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
+                
+                int preguntasEliminadas = 0;
+                
                 eliminarPanel();
                 
-                
+                //Pregunta eliminada (quedan X)
             }
         });
 
@@ -55,7 +58,7 @@ public class panelPregunta extends javax.swing.JPanel {
     
     // Eliminar el panel del contenedor padre
     private void eliminarPanel(){
-        this.padre.eliminarPanel(this);
+        this.padre.eliminarPanelPadre(this);
     }
 
     // Métodos para obtener los textos de los JTextField
