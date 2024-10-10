@@ -104,12 +104,12 @@ public class PanelMensaje extends javax.swing.JPanel {
                 break;
             case 10:
                 mensaje = "Pregunta añadida (actualmente " + cantidad + ")";
-                tiempo = 1;
+                tiempo = 2;
                 color = Color.WHITE;
                 break;
             case 11:
                 mensaje = "Pregunta eliminada (quedan " + cantidad + ")";
-                tiempo = 1;
+                tiempo = 2;
                 color = Color.WHITE;
                 break;
             default:
