@@ -18,6 +18,8 @@ public class main extends javax.swing.JFrame {
     private ArrayList<panelPregunta> listaPanelesPreguntas = new ArrayList<>(); // Lista que almacena instancias de panelPregunta                                                                           
     private int contadorPaneles = listaPanelesPreguntas.size();
     public String rutaCSV = "src/api/datos.csv";// Ruta al archivo CSV que contiene los datos.
+    private String rutaArchivo = "QuizDemo";
+    private String rutaArchivoFinal = "NuevoQuizDemo.zip";
 
     Dimension buttonDimension = new Dimension(20, 20);
 
@@ -51,6 +53,7 @@ public class main extends javax.swing.JFrame {
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
         System.out.println(listaPreguntas);
 
+        
         // Recorre la lista de preguntas y actualiza los paneles en la interfaz según
         // los datos del CSV.
         actualizarPanelesConWhile(listaPreguntas);
@@ -64,6 +67,7 @@ public class main extends javax.swing.JFrame {
         utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
 
+
         //Elimina la barra de scroll en el scrollPanel
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -75,9 +79,16 @@ public class main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                
+                int preguntasAñadidas = 0;
+                
+                
                 AgregarPanelPreguntas(listaPreguntas);// Agrega un nuevo panel de preguntas a la interfaz.
-                System.out.println(contadorPaneles);
+                
+                //Pregunta añadida (preguntasAñadidas++)
+                //Las preguntas han sido guardadas (contadorPaneles.size())
+
+
             }
 
         });
@@ -87,7 +98,9 @@ public class main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 boolean todoCorrecto = true;
+
                 // Limpiar la listaPreguntas para evitar duplicados al guardar
                 listaPreguntas.clear();
 
@@ -96,13 +109,16 @@ public class main extends javax.swing.JFrame {
 
                     // Captura los datos del panel
                     String pregunta = panel.getPreguntaText(); // Obtiene la pregunta
+                    
                     String respuestaCorrecta = panel.getRespuestaCorrectaText(); // Obtiene la respuesta correcta
-                    String respuestaIncorrecta1 = panel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta
-                    // incorrecta
-                    String respuestaIncorrecta2 = panel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta
-                    // incorrecta
-                    String respuestaIncorrecta3 = panel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta
-                    // incorrecta
+                    
+                    String respuestaIncorrecta1 = panel.getRespuestaIncorrecta1Text(); // Obtiene la primera respuesta incorrecta
+                                                                                        
+                    String respuestaIncorrecta2 = panel.getRespuestaIncorrecta2Text(); // Obtiene la segunda respuesta incorrecta
+                                                                                       
+                    String respuestaIncorrecta3 = panel.getRespuestaIncorrecta3Text(); // Obtiene la tercera respuesta incorrecta
+                                                                                       
+
 
                     // Verifica que todos los campos tengan texto antes de crear una nueva pregunta
                     if (!pregunta.isEmpty() && !respuestaCorrecta.isEmpty() && !respuestaIncorrecta1.isEmpty()
@@ -114,6 +130,7 @@ public class main extends javax.swing.JFrame {
 
                         // Agrega la nueva pregunta a la lista
                         listaPreguntas.add(nuevaPregunta);
+
                     } else {
                         todoCorrecto = false;
                     }
@@ -124,6 +141,7 @@ public class main extends javax.swing.JFrame {
                     showMessage(8, listaPreguntas.size());
                 } else {
                     showMessage(3);
+
                 }
 
             }
@@ -132,7 +150,8 @@ public class main extends javax.swing.JFrame {
             Dimension panelPreguntaDimension = new Dimension(350, 220);
 
         });
-
+        
+        
     }
 
     // Método para agregar un panel con preguntas que se encuentran el csv.
@@ -195,7 +214,10 @@ public class main extends javax.swing.JFrame {
         showMessage(10, listaPanelesPreguntas.size());
     }
 
-    public void eliminarPanel(panelPregunta panel) {
+    
+    
+    public void eliminarPanelPadre(panelPregunta panel) {
+
         // Elimina el panel del contenedor visual
         jPanelListadoPreguntas.remove(panel);
 

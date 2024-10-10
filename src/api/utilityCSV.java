@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
@@ -33,8 +37,10 @@ public class utilityCSV {
                 arrayL.add(p);
             }
 
+            //Las preguntas han sido cargadas con éxito
         } catch (Exception e) {
-            System.err.println("Error al leer el archivo: " + e.getMessage());
+
+            //No se encontró el archivo de preguntas
         }
 
         return arrayL;
@@ -46,11 +52,6 @@ public class utilityCSV {
         // Crea un nuevo archivo CSV en la ruta especificada
         File f = new File(rutaArchivo);
 
-        // Si el archivo existe, anexamos datos
-        if (f.exists()) {
-            System.out.println("El archivo ya existe");
-        }
-
         // Intenta escribir en el archivo
         try (FileWriter fw = new FileWriter(f, false)) {
 
@@ -61,6 +62,7 @@ public class utilityCSV {
                 fw.write(preguntas.tuCSV() + "\n");
             }
 
+            //Las preguntas han sido guardadas (X en total)
         } catch (Exception e) {
             System.out.println("Error al crear el archivo");
 
@@ -68,66 +70,52 @@ public class utilityCSV {
 
     }
 
-    
-    public static void agregarCarpeta(String ruta, String carpeta, ZipOutputStream zip) throws Exception {
-
-        
-        File directorio = new File(carpeta);
-
-        
-        for (String nombreArchivo : directorio.list()) {
-
-            
-            if (ruta.equals("")) {
-
-                
-                agregarArchivo(directorio.getName(), carpeta + "/" + nombreArchivo, zip);
-            } else {
-
-                
-                agregarArchivo(ruta + "/" + directorio.getName(), carpeta + "/" + nombreArchivo, zip);
-            }
-        }
-    }
-
-    
     public static void agregarArchivo(String ruta, String directorio, ZipOutputStream zip) throws Exception {
 
         //Crea un nuevo objeto File que representa el directorio.
         File archivo = new File(directorio);
 
-        //Si es un directorio.
         if (archivo.isDirectory()) {
 
-            
             agregarCarpeta(ruta, directorio, zip);
-            
+
         } else {
 
             //Crea un array de bytes con tamaño de 4096bytes
             byte[] buffer = new byte[4096];
             int longitud;
 
-            
             FileInputStream entrada = new FileInputStream(archivo);
 
-            
             zip.putNextEntry(new ZipEntry(ruta + "/" + archivo.getName()));
 
-            
             while ((longitud = entrada.read(buffer)) >= 0) {
                 zip.write(buffer, 0, longitud);
             }
         }
     }
 
-    
+    public static void agregarCarpeta(String ruta, String carpeta, ZipOutputStream zip) throws Exception {
+
+        File directorio = new File(carpeta);
+
+        for (String nombreArchivo : directorio.list()) {
+
+            if (ruta.equals("")) {
+
+                agregarArchivo(directorio.getName(), carpeta + "/" + nombreArchivo, zip);
+            } else {
+
+                agregarArchivo(ruta + "/" + directorio.getName(), carpeta + "/" + nombreArchivo, zip);
+            }
+        }
+    }
+
     public static void comprimir(String archivo, String archivoZIP) throws Exception {
 
         //Implementa un filtro de flujo de salida para escribir archivos en formato ZIP.
         ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(archivoZIP));
 
-        
         agregarCarpeta("", archivo, zip);
 
         //Sirve para vaciar la secuencia escribiendo cualquier salida almacenada en la secuencia subyacente.
@@ -136,6 +124,23 @@ public class utilityCSV {
         //Cierra este flujo y libera todos los recursos del sistema asociados a él.  
         zip.close();
 
+        //Las preguntas se guardaron y se exportó el simulador en: X/X.zip
+    }
+
+    public static void copiarArchivoCSVEnRutaNueva() {
+        Path rutaCSVOriginal = Paths.get("src/api/datos.csv");
+
+        Path rutaCSVDestino = Paths.get("QuizDemo/QuizDemo_Data/StreamingAssets/Preguntas.csv");
+
+        try {
+
+            //Copia el archivo en la ruta destino.
+            Files.copy(rutaCSVOriginal, rutaCSVDestino);
+
+            System.out.println("Archivo copiado con éxito.");
+        } catch (IOException e) {
+            System.err.println("Error al copiar el archivo: " + e.getMessage());
+        }
     }
 
 }

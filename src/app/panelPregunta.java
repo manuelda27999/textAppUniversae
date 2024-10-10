@@ -66,8 +66,10 @@ public class panelPregunta extends javax.swing.JPanel {
     }
 
     // Eliminar el panel del contenedor padre
-    private void eliminarPanel() {
-        this.padre.eliminarPanel(this);
+
+    private void eliminarPanel(){
+        this.padre.eliminarPanelPadre(this);
+
     }
 
     // Métodos para obtener los textos de los JTextField
