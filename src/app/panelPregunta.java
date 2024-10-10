@@ -2,7 +2,6 @@ package app;
 
 import api.Preguntas;
 import java.util.ArrayList;
-import app.utility.RoundedBorder;
 import java.awt.Dimension;
 
 public class panelPregunta extends javax.swing.JPanel {
