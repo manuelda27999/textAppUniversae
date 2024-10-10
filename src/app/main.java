@@ -3,6 +3,8 @@ package app;
 import api.Preguntas;
 import api.utilityCSV;
 import java.awt.Dimension;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,6 +23,30 @@ public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
+        
+        showMessage(8, 12);
+
+        //Pruebas para el hacer la barra de scroll
+        jScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                
+                double heightScrollPane = jScrollPane.getHeight();
+                double heightPanelListadoPreguntas = jPanelListadoPreguntas.getHeight();
+                
+                double porcentaje = heightScrollPane / heightPanelListadoPreguntas;
+                System.out.println(porcentaje);
+                
+                double newHeight = heightScrollPane * porcentaje;
+                double newY = e.getValue() * porcentaje;
+                
+                int altoScroll = jScrollPane.getHeight();
+                roundedPanelBarritaScroll.setBounds(0, (int)newY, 10,(int)newHeight);
+                roundedPanelBarritaScroll.revalidate();
+                roundedPanelBarritaScroll.repaint();
+            }
+        });
 
         // Lee el archivo CSV y almacena las preguntas en la lista.
         utilityCSV.leerElArchivo(rutaCSV, listaPreguntas);
@@ -30,14 +56,16 @@ public class main extends javax.swing.JFrame {
         // los datos del CSV.
         actualizarPanelesConWhile(listaPreguntas);
 
-        // Establecer imagen y dimensiones del desplegable.
-        Dimension desplegableDimension = new Dimension(346, 40);
+        //Establecer imagen y dimensiones del desplegable
+        Dimension desplegableDimension = new Dimension(340, 40);
+
         utility.SetImageLabel(jLabelDesplegable, "src/app/InterfazMobile/Desplegable_On.png", desplegableDimension);
 
         // Establecer imagen y dimensiones de los botones
         utility.SetImageLabel(jLabelButtonInfo, "src/app/InterfazMobile/Info_Off.png", buttonDimension);
         utility.SetImageLabel(jLabelButtonAñadir, "src/app/InterfazMobile/Mas_Off.png", buttonDimension);
-
+        
+        //Elimina la barra de scroll en el scrollPanel
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.getVerticalScrollBar().setUnitIncrement(20);
@@ -99,7 +127,8 @@ public class main extends javax.swing.JFrame {
 
             }
 
-            // Establecer dimensiones de los paneles de preguntas
+
+            //Establecer dimensiones de los paneles de preguntas
             Dimension panelPreguntaDimension = new Dimension(350, 220);
 
         });
@@ -142,13 +171,14 @@ public class main extends javax.swing.JFrame {
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
         listaPanelesPreguntas.add(0, nuevoPanel);
-        nuevoPanel.iniciar(contadorPaneles, lista, listaPanelesPreguntas);// Inicializa el panel con el número de panel y la lista de
-                                                  
+        nuevoPanel.iniciar(contadorPaneles, lista, listaPanelesPreguntas);// Inicializa el panel con el número de panel y la lista de                                          
+
 
         // Muestra la lista de preguntas en la consola para verificar
         System.out.println("Preguntas actuales en la lista: " + lista);
 
     }
+
     
     
     public void eliminarPanel(panelPregunta panel) {
@@ -161,6 +191,21 @@ public class main extends javax.swing.JFrame {
         // Actualiza la vista
         jPanelListadoPreguntas.revalidate();
         jPanelListadoPreguntas.repaint();
+    }
+    
+    //Crea un panel de mensaje
+    private void showMessage(int numeroMensaje){
+        PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje);
+        jPanelContainerMensaje.add(panelMensaje);
+        jPanelContainerMensaje.revalidate();
+        jPanelContainerMensaje.repaint();
+    }
+    
+    private void showMessage(int numeroMensaje, int cantidad) {
+        PanelMensaje panelMensaje = new PanelMensaje(numeroMensaje, cantidad);
+        jPanelContainerMensaje.add(panelMensaje);
+        jPanelContainerMensaje.revalidate();
+        jPanelContainerMensaje.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -179,9 +224,12 @@ public class main extends javax.swing.JFrame {
         jLabelAñadirUnaPregunta = new javax.swing.JLabel();
         jLabelButtonAñadir = new javax.swing.JLabel();
         jLabelButtonInfo = new javax.swing.JLabel();
+        roundedPanelContenedorBarritaScroll = new app.RoundedPanel();
+        roundedPanelBarritaScroll = new app.RoundedPanel();
         jScrollPane = new javax.swing.JScrollPane();
         jPanelListadoPreguntas = new javax.swing.JPanel();
         jPanelButton = new javax.swing.JPanel();
+        jPanelContainerMensaje = new javax.swing.JPanel();
         jLabelButtonText = new javax.swing.JLabel();
         jLabelButton = new javax.swing.JLabel();
         jLabelfondo = new javax.swing.JLabel();
@@ -273,6 +321,27 @@ public class main extends javax.swing.JFrame {
         jPanelPrincipal.add(jPanelAñadirUnaPregunta,
                 new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 360, -1));
 
+        roundedPanelContenedorBarritaScroll.setBackground(new java.awt.Color(73, 82, 92));
+        roundedPanelContenedorBarritaScroll.setLayout(null);
+
+        roundedPanelBarritaScroll.setBackground(new java.awt.Color(105, 254, 254));
+
+        javax.swing.GroupLayout roundedPanelBarritaScrollLayout = new javax.swing.GroupLayout(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setLayout(roundedPanelBarritaScrollLayout);
+        roundedPanelBarritaScrollLayout.setHorizontalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        roundedPanelBarritaScrollLayout.setVerticalGroup(
+            roundedPanelBarritaScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
+        roundedPanelContenedorBarritaScroll.add(roundedPanelBarritaScroll);
+        roundedPanelBarritaScroll.setBounds(0, 0, 10, 70);
+
+        jPanelPrincipal.add(roundedPanelContenedorBarritaScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 10, 630));
+
         jScrollPane.setBackground(new java.awt.Color(255, 0, 255));
         jScrollPane.setBorder(null);
         jScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -286,6 +355,10 @@ public class main extends javax.swing.JFrame {
 
         jPanelButton.setOpaque(false);
         jPanelButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelContainerMensaje.setOpaque(false);
+        jPanelContainerMensaje.setLayout(new java.awt.BorderLayout());
+        jPanelButton.add(jPanelContainerMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 430, 40));
 
         jLabelButtonText.setFont(new java.awt.Font("Raleway SemiBold", 0, 18)); // NOI18N
         jLabelButtonText.setForeground(new java.awt.Color(31, 45, 57));
@@ -303,6 +376,7 @@ public class main extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 830, 430, 110));
 
+        jLabelfondo.setBackground(new java.awt.Color(73, 82, 92));
         jLabelfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/InterfazMobile/Fondo.png"))); // NOI18N
         jPanelPrincipal.add(jLabelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 940));
 
@@ -389,9 +463,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelfondo;
     private javax.swing.JPanel jPanelAñadirUnaPregunta;
     private javax.swing.JPanel jPanelButton;
+    private javax.swing.JPanel jPanelContainerMensaje;
     private javax.swing.JPanel jPanelDesplegable;
     private javax.swing.JPanel jPanelListadoPreguntas;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JScrollPane jScrollPane;
+    private app.RoundedPanel roundedPanelBarritaScroll;
+    private app.RoundedPanel roundedPanelContenedorBarritaScroll;
     // End of variables declaration//GEN-END:variables
 }

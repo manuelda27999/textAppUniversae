@@ -24,6 +24,14 @@ public class RoundedPanel extends JPanel{
         this.radius = radius;
         setOpaque(false); // Hacer el panel transparente
     }
+    
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+    
+    public int getRadius() {
+        return this.radius;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
