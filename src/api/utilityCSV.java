@@ -1,9 +1,13 @@
 package api;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class utilityCSV {
 
@@ -61,6 +65,76 @@ public class utilityCSV {
             System.out.println("Error al crear el archivo");
 
         }
+
+    }
+
+    
+    public static void agregarCarpeta(String ruta, String carpeta, ZipOutputStream zip) throws Exception {
+
+        
+        File directorio = new File(carpeta);
+
+        
+        for (String nombreArchivo : directorio.list()) {
+
+            
+            if (ruta.equals("")) {
+
+                
+                agregarArchivo(directorio.getName(), carpeta + "/" + nombreArchivo, zip);
+            } else {
+
+                
+                agregarArchivo(ruta + "/" + directorio.getName(), carpeta + "/" + nombreArchivo, zip);
+            }
+        }
+    }
+
+    
+    public static void agregarArchivo(String ruta, String directorio, ZipOutputStream zip) throws Exception {
+
+        //Crea un nuevo objeto File que representa el directorio.
+        File archivo = new File(directorio);
+
+        //Si es un directorio.
+        if (archivo.isDirectory()) {
+
+            
+            agregarCarpeta(ruta, directorio, zip);
+            
+        } else {
+
+            //Crea un array de bytes con tamaño de 4096bytes
+            byte[] buffer = new byte[4096];
+            int longitud;
+
+            
+            FileInputStream entrada = new FileInputStream(archivo);
+
+            
+            zip.putNextEntry(new ZipEntry(ruta + "/" + archivo.getName()));
+
+            
+            while ((longitud = entrada.read(buffer)) >= 0) {
+                zip.write(buffer, 0, longitud);
+            }
+        }
+    }
+
+    
+    public static void comprimir(String archivo, String archivoZIP) throws Exception {
+
+        //Implementa un filtro de flujo de salida para escribir archivos en formato ZIP.
+        ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(archivoZIP));
+
+        
+        agregarCarpeta("", archivo, zip);
+
+        //Sirve para vaciar la secuencia escribiendo cualquier salida almacenada en la secuencia subyacente.
+        zip.flush();
+
+        //Cierra este flujo y libera todos los recursos del sistema asociados a él.  
+        zip.close();
 
     }
 
