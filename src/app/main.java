@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -79,16 +80,11 @@ public class main extends javax.swing.JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                
-                int preguntasAñadidas = 0;
-                
-                
+            
                 AgregarPanelPreguntas(listaPreguntas);// Agrega un nuevo panel de preguntas a la interfaz.
                 
                 //Pregunta añadida (preguntasAñadidas++)
                 //Las preguntas han sido guardadas (contadorPaneles.size())
-
-
             }
 
         });
@@ -143,7 +139,14 @@ public class main extends javax.swing.JFrame {
                     showMessage(3);
 
                 }
-
+                
+                utilityCSV.copiarArchivoCSVEnRutaNueva();
+                
+                try {
+                    utilityCSV.comprimir(rutaArchivo, rutaArchivoFinal);
+                } catch (Exception ex) {
+                    System.err.println("Error al comprimir el archivo");
+                }
             }
 
             //Establecer dimensiones de los paneles de preguntas
