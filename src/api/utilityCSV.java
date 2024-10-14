@@ -46,28 +46,41 @@ public class utilityCSV {
         return arrayL;
     }
 
-    //Crea o actualiza un archivo CSV con una lista de preguntas.
+    // Crea o actualiza un archivo CSV con una lista de preguntas.
     public static void crearYAnexarAArchivoCsv(String rutaArchivo, ArrayList<Preguntas> arrayPreguntas) {
 
         // Crea un nuevo archivo CSV en la ruta especificada
         File f = new File(rutaArchivo);
+        
+        // Lista para almacenar los elementos no duplicados
+        ArrayList<Preguntas> listaConElementosNoDuplicados = new ArrayList<>();
+        
+        // Itera sobre cada elemento de arrayPreguntas
+        for (Preguntas pregunta : arrayPreguntas) {
 
-        // Intenta escribir en el archivo
+            // Si la lista de elementos no duplicados NO contiene la pregunta, la añadimos
+            if (!listaConElementosNoDuplicados.contains(pregunta)) {
+                listaConElementosNoDuplicados.add(pregunta);
+            } else {
+                System.out.println("Elemento duplicado: " + pregunta);
+            }
+        }
+
+        // Imprimir lista sin duplicados
+        System.out.println("Lista de elementos sin duplicados: " + listaConElementosNoDuplicados);
+        
+        // Escribir en el archivo CSV
         try (FileWriter fw = new FileWriter(f, false)) {
-
-            // Itera sobre cada pregunta en la lista
-            for (Preguntas preguntas : arrayPreguntas) {
-
-                // Obtiene la representación en CSV de la pregunta y la escribe en el archivo
+            
+            // Itera sobre cada pregunta en la lista sin duplicados
+            for (Preguntas preguntas : listaConElementosNoDuplicados) {
+                // Escribe la representación CSV de la pregunta en el archivo
                 fw.write(preguntas.tuCSV() + "\n");
             }
 
-            //Las preguntas han sido guardadas (X en total)
-        } catch (Exception e) {
-            System.out.println("Error al crear el archivo");
-
+        } catch (IOException e) {
+            System.out.println("Error al crear el archivo: " + e.getMessage());
         }
-
     }
 
     public static void agregarArchivo(String ruta, String directorio, ZipOutputStream zip) throws Exception {

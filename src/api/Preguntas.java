@@ -1,5 +1,9 @@
 package api;
 
+import java.util.Objects;
+
+
+
 public class Preguntas {
 
     
@@ -20,7 +24,10 @@ public class Preguntas {
         this.respuestaIncorrecta3 = respuestaIncorrecta3;
 
     }
-
+    
+    
+    
+    
     // Devuelve una representación en cadena de texto (String) del objeto Preguntas.
     @Override
     public String toString() {
@@ -33,11 +40,32 @@ public class Preguntas {
         return this.pregunta + ";" + this.respuestaCorrecta + ";" + this.respuestaIncorrecta1 + ";" + this.respuestaIncorrecta2 + ";" + this.respuestaIncorrecta3;
     }
     
+     // Sobrescribimos el método equals() para comparar los atributos relevantes
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Si es el mismo objeto, son iguales
+        if (obj == null || getClass() != obj.getClass()) return false; // Si es de otra clase, no son iguales
+        
+        Preguntas otraPregunta = (Preguntas) obj;
+
+        // Comparamos cada campo relevante para decidir si dos objetos son iguales
+        return pregunta.equals(otraPregunta.pregunta) &&
+               respuestaCorrecta.equals(otraPregunta.respuestaCorrecta) &&
+               respuestaIncorrecta1.equals(otraPregunta.respuestaIncorrecta1) &&
+               respuestaIncorrecta2.equals(otraPregunta.respuestaIncorrecta2) &&
+               respuestaIncorrecta3.equals(otraPregunta.respuestaIncorrecta3);
+    }
+
+    // Sobrescribimos hashCode() para que coincida con el resultado de equals()
+    @Override
+    public int hashCode() {
+        return Objects.hash(pregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
+    }
+
     
    
     // Métodos getter y setter para acceder y modificar los atributos de la pregunta
    
-
     public String getPregunta() {
         return pregunta;
     }
